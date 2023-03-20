@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{313239D7-1353-4380-8EC1-49D82CE2A913}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{AE439B52-041E-4AAE-9D7A-801F6358614F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F473D995-0A0B-4751-B586-873235A7EBCA}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
+		Dockerfile = Dockerfile
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Common", "WaferMovie.Common\WaferMovie.Common.csproj", "{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Data", "WaferMovie.Data\WaferMovie.Data.csproj", "{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Entities", "WaferMovie.Entities\WaferMovie.Entities.csproj", "{A933D3DD-154E-43E4-A4DA-7E12BFC62C34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.IocConfig", "WaferMovie.IocConfig\WaferMovie.IocConfig.csproj", "{FE69C464-2255-4FD4-8D16-07A689DFF96E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Web", "WaferMovie.Web\WaferMovie.Web.csproj", "{35BFD132-48A3-4E55-977C-E9440324644D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Services", "WaferMovie.Services\WaferMovie.Services.csproj", "{ED04FD70-4565-4CE9-8209-AAAF00F39EA1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Test", "WaferMovie.Test\WaferMovie.Test.csproj", "{8C5C9ED8-F385-4A4D-8032-E9B919812255}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.ViewModels", "WaferMovie.ViewModels\WaferMovie.ViewModels.csproj", "{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A933D3DD-154E-43E4-A4DA-7E12BFC62C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A933D3DD-154E-43E4-A4DA-7E12BFC62C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A933D3DD-154E-43E4-A4DA-7E12BFC62C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A933D3DD-154E-43E4-A4DA-7E12BFC62C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE69C464-2255-4FD4-8D16-07A689DFF96E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE69C464-2255-4FD4-8D16-07A689DFF96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE69C464-2255-4FD4-8D16-07A689DFF96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE69C464-2255-4FD4-8D16-07A689DFF96E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35BFD132-48A3-4E55-977C-E9440324644D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BFD132-48A3-4E55-977C-E9440324644D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BFD132-48A3-4E55-977C-E9440324644D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BFD132-48A3-4E55-977C-E9440324644D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED04FD70-4565-4CE9-8209-AAAF00F39EA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED04FD70-4565-4CE9-8209-AAAF00F39EA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED04FD70-4565-4CE9-8209-AAAF00F39EA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED04FD70-4565-4CE9-8209-AAAF00F39EA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C5C9ED8-F385-4A4D-8032-E9B919812255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5C9ED8-F385-4A4D-8032-E9B919812255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5C9ED8-F385-4A4D-8032-E9B919812255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5C9ED8-F385-4A4D-8032-E9B919812255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8D8D3EC-8083-49FD-82D5-6DACC3F3682C} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{66F9FD3D-0AB0-42CF-A99A-D56796C0BA64} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{A933D3DD-154E-43E4-A4DA-7E12BFC62C34} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{FE69C464-2255-4FD4-8D16-07A689DFF96E} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{35BFD132-48A3-4E55-977C-E9440324644D} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{ED04FD70-4565-4CE9-8209-AAAF00F39EA1} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{8C5C9ED8-F385-4A4D-8032-E9B919812255} = {313239D7-1353-4380-8EC1-49D82CE2A913}
+		{EF09C3E6-CC66-4E1E-A2AA-4696279DBA51} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37AA6C2E-80AD-4B12-86DA-544F3DE09FEE}
+	EndGlobalSection
+EndGlobal
