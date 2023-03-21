@@ -22,6 +22,7 @@ public static class ServiceExtensions
     {
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         services.AddScoped<IJwtServices, JwtServices>();
+        services.AddScoped<IEmailServices, EmailServices>();
 
         return services;
     }
