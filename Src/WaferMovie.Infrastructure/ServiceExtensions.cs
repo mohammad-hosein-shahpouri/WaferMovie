@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WaferMovie.Application.Common.Interfaces;
+using WaferMovie.Infrastructure.Services;
 
 namespace WaferMovie.Infrastructure;
 
@@ -20,6 +21,7 @@ public static class ServiceExtensions
     private static IServiceCollection AddDependencyInjection(this IServiceCollection services)
     {
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+        services.AddScoped<IJwtServices, JwtServices>();
 
         return services;
     }
