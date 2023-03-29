@@ -1,4 +1,5 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using WaferMovie.Application;
 using WaferMovie.Infrastructure;
 
@@ -13,6 +14,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication()
     .AddInfrastructure(builder.Configuration);
+
+builder.Services.AddApiVersioning(o =>
+{
+    o.AssumeDefaultVersionWhenUnspecified = true;
+    o.DefaultApiVersion = new ApiVersion(1, 0);
+    o.ReportApiVersions = true;
+});
 
 var app = builder.Build();
 
