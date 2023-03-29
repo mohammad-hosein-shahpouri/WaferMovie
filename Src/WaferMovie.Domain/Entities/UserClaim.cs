@@ -2,7 +2,7 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class UserClaim : IdentityUserClaim<Guid>, IEntityTypeConfiguration<UserClaim>
+public class UserClaim : IdentityUserClaim<int>, IEntityTypeConfiguration<UserClaim>
 {
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     public virtual User User { get; set; } = default!;

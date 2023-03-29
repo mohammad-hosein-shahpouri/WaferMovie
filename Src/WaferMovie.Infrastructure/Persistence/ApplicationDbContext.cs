@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using WaferMovie.Application.Common.Interfaces;
 using WaferMovie.Domain.Entities;
 
-namespace WaferMovie.Infrastructure;
+namespace WaferMovie.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, IdentityUserLogin<Guid>, RoleClaim, IdentityUserToken<Guid>>, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, IdentityUserLogin<int>, RoleClaim, IdentityUserToken<int>>, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     #region Series
@@ -49,13 +50,14 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, Guid, UserClai
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        var domainAssembly = AppDomain.CurrentDomain.Load("WaferMovie.Domain");
+        modelBuilder.ApplyConfigurationsFromAssembly(domainAssembly);
         modelBuilder.ApplyConfiguration(new User());
         modelBuilder.ApplyConfiguration(new Role());
         modelBuilder.ApplyConfiguration(new UserRole());
         modelBuilder.ApplyConfiguration(new RoleClaim());
         modelBuilder.ApplyConfiguration(new UserClaim());
-        modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
-        modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
+        modelBuilder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins");
+        modelBuilder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
     }
 }

@@ -1,25 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\WaferMovie.Domain\WaferMovie.Domain.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\WaferMovie.Domain\WaferMovie.Domain.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Models\" />
-    <Folder Include="Identity\" />
-    <Folder Include="Movies\" />
-    <Folder Include="Series\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Series\" />
+		<Folder Include="Users\Commands\CreateUser\" />
+		<Folder Include="Users\Commands\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.5.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+		<PackageReference Include="Mapster" Version="7.3.0" />
+		<PackageReference Include="MediatR" Version="12.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
 </Project>

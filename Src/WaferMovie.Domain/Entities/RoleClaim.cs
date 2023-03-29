@@ -2,7 +2,7 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class RoleClaim : IdentityRoleClaim<Guid>, IEntityTypeConfiguration<RoleClaim>
+public class RoleClaim : IdentityRoleClaim<int>, IEntityTypeConfiguration<RoleClaim>
 {
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     public virtual Role Role { get; set; } = default!;

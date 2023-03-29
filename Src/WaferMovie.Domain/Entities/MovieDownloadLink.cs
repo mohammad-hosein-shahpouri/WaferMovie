@@ -3,7 +3,7 @@
 public class MovieDownloadLink : IEntityTypeConfiguration<MovieDownloadLink>
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid MovieId { get; set; }
+    public int MovieId { get; set; }
 
     public string Quality { get; set; } = default!;
     public string? Encoder { get; set; }
@@ -17,7 +17,7 @@ public class MovieDownloadLink : IEntityTypeConfiguration<MovieDownloadLink>
 
     public void Configure(EntityTypeBuilder<MovieDownloadLink> builder)
     {
-        builder.HasKey(pk => new { pk.Id, pk.MovieId });
+        builder.HasKey(pk => pk.Id);
         builder.HasOne(o => o.Movie)
             .WithMany(m => m.DownloadLinks)
             .HasForeignKey(fk => fk.MovieId);

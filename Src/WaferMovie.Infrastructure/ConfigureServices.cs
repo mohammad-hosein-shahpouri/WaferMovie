@@ -2,11 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WaferMovie.Application.Common.Interfaces;
+using WaferMovie.Infrastructure.Persistence;
 using WaferMovie.Infrastructure.Services;
 
 namespace WaferMovie.Infrastructure;
 
-public static class ServiceExtensions
+public static class ConfigureServices
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WaferMovie.Domain.Entities;
 
-public class Role : IdentityRole<Guid>, IEntityTypeConfiguration<Role>
+public class Role : IdentityRole<int>, IEntityTypeConfiguration<Role>
 {
     public Role()
     {

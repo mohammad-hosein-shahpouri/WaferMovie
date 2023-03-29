@@ -3,7 +3,7 @@
 public class SerieDownloadLink : IEntityTypeConfiguration<SerieDownloadLink>
 {
     public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid EpisodeId { get; set; }
+    public int EpisodeId { get; set; }
 
     public string Quality { get; set; } = default!;
     public string? Encoder { get; set; }
@@ -16,7 +16,7 @@ public class SerieDownloadLink : IEntityTypeConfiguration<SerieDownloadLink>
 
     public void Configure(EntityTypeBuilder<SerieDownloadLink> builder)
     {
-        builder.HasKey(pk => new { pk.Id, pk.EpisodeId });
+        builder.HasKey(pk => pk.Id);
         builder.HasOne(o => o.Episode)
             .WithMany(m => m.DownloadLinks)
             .HasForeignKey(fk => fk.EpisodeId);

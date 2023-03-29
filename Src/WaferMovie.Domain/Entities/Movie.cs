@@ -2,7 +2,7 @@
 
 public class Movie : IEntityTypeConfiguration<Movie>
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
 
     public string IMDB { get; set; } = default!;
     public string Title { get; set; } = default!;
@@ -14,8 +14,7 @@ public class Movie : IEntityTypeConfiguration<Movie>
     public bool IsFree { get; set; }
     public int OutYear { get; set; } = DateTime.Now.Year;
 
-    // TODO: MovieAgeRestriction Enum
-    // public MovieAgeRestriction AgeRestriction { get; set; }
+    public MovieAgeRestriction AgeRestriction { get; set; }
 
     public virtual ICollection<MovieDownloadLink> DownloadLinks { get; set; } = new List<MovieDownloadLink>();
 

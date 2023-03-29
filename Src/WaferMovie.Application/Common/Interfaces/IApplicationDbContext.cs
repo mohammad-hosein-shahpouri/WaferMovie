@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using WaferMovie.Domain.Entities;
 
 namespace WaferMovie.Application.Common.Interfaces;
 
@@ -10,8 +8,8 @@ public interface IApplicationDbContext : IDisposable
 
     DbSet<User> Users { get; set; }
     DbSet<UserClaim> UserClaims { get; set; }
-    DbSet<IdentityUserLogin<Guid>> UserLogins { get; set; }
-    DbSet<IdentityUserToken<Guid>> UserTokens { get; set; }
+    DbSet<IdentityUserLogin<int>> UserLogins { get; set; }
+    DbSet<IdentityUserToken<int>> UserTokens { get; set; }
     DbSet<Role> Roles { get; set; }
     DbSet<RoleClaim> RoleClaims { get; set; }
     DbSet<UserRole> UserRoles { get; set; }

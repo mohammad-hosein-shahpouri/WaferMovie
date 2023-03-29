@@ -2,9 +2,9 @@
 
 public class Season : IEntityTypeConfiguration<Season>
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
 
-    public Guid SerieId { get; set; }
+    public int SerieId { get; set; }
     public string? Quality { get; set; }
     public int SeasonNumber { get; set; } = 1;
     public string? AverageSize { get; set; }

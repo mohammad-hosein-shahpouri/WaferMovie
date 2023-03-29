@@ -2,9 +2,9 @@
 
 public class Episode : IEntityTypeConfiguration<Episode>
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public int Id { get; set; }
 
-    public Guid SeasonId { get; set; }
+    public int SeasonId { get; set; }
     public int EpisodeNumber { get; set; } = 1;
     public bool IsLastEpisode { get; set; } = false;
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WaferMovie.Domain.Entities;
 
-public class User : IdentityUser<Guid>, IEntityTypeConfiguration<User>
+public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
 {
     public string? Name { get; set; }
 

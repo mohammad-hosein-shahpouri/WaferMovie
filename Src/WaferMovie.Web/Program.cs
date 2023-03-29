@@ -1,15 +1,18 @@
+using FluentValidation;
+using WaferMovie.Application;
 using WaferMovie.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication()
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

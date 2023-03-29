@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WaferMovie.Application\WaferMovie.Application.csproj" />
-    <ProjectReference Include="..\WaferMovie.Domain\WaferMovie.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
