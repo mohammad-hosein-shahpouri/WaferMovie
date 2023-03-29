@@ -1,5 +1,10 @@
+global using FluentValidation;
 global using MediatR;
-global using Moq;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
 global using Shouldly;
+global using System.Reflection;
+global using WaferMovie.Application.Common.Behaviors;
 global using WaferMovie.Application.Common.Interfaces;
+global using WaferMovie.Domain.Enums;
 global using Xunit;
