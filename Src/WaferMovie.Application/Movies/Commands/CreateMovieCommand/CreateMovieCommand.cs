@@ -1,5 +1,6 @@
 ﻿namespace WaferMovie.Application.Movies.Commands.CreateMovieCommand;
 
+[ValidateNever]
 public record CreateMovieCommand : MovieCoreModel, IRequest<CrudResult<Movie>>
 {
     public string IMDB { get; set; } = default!;

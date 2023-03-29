@@ -12,8 +12,6 @@
 
 	<ItemGroup>
 		<Folder Include="Series\" />
-		<Folder Include="Users\Commands\CreateUser\" />
-		<Folder Include="Users\Commands\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WaferMovie.Application.Common.Interfaces;
+using WaferMovie.Domain.Entities;
 using WaferMovie.Infrastructure.Persistence;
 using WaferMovie.Infrastructure.Services;
 
@@ -15,6 +17,10 @@ public static class ConfigureServices
             .UseNpgsql(configuration.GetConnectionString("postgres")));
 
         services.AddDependencyInjection();
+
+        services.AddIdentity<User, Role>()
+            .AddDefaultTokenProviders()
+         .AddEntityFrameworkStores<ApplicationDbContext>();
 
         return services;
     }

@@ -8,12 +8,11 @@ public class CreateMovieCommandValidator : MovieCoreModelValidator<CreateMovieCo
     {
         this.dbContext = dbContext;
 
-        // TODO: CreateMovieCommandValidator Messages
         RuleFor(r => r.IMDB)
             .NotEmpty()
-            .WithMessage("IMDB Required")
+            .WithMessage(m => $"{nameof(m.IMDB)} is Required")
             .MustAsync(IMDBAllowed)
-            .WithMessage("Duplicate IMDB");
+            .WithMessage((m => $"Another movie exists with this {nameof(m.IMDB)}"));
     }
 
     private async Task<bool> IMDBAllowed(string imdbId, CancellationToken cancellationToken)
