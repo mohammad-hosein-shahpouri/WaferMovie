@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Web", "Src\WaferMovie.Web\WaferMovie.Web.csproj", "{4228182F-FEE4-449A-83AB-F6B31BD94F13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaferMovie.Application.Test", "Test\WaferMovie.Application.Test\WaferMovie.Application.Test.csproj", "{990AA45B-947A-4F70-845C-E067FAD6D940}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{990AA45B-947A-4F70-845C-E067FAD6D940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{990AA45B-947A-4F70-845C-E067FAD6D940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{990AA45B-947A-4F70-845C-E067FAD6D940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{990AA45B-947A-4F70-845C-E067FAD6D940}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{94FA0BC2-503C-4541-AB36-CBEB3DC4047B} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
 		{0F5A6EF1-B19D-4D44-BF48-5C1FAC85E918} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
+		{990AA45B-947A-4F70-845C-E067FAD6D940} = {313239D7-1353-4380-8EC1-49D82CE2A913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37AA6C2E-80AD-4B12-86DA-544F3DE09FEE}
