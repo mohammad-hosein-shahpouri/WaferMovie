@@ -1,10 +1,11 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using WaferMovie.Domain.Entities;
 using WaferMovie.Infrastructure.Persistence;
 
 namespace WaferMovie.Application.Test;
 
-public class InMemoryDatabase
+public static class InMemoryDatabase
 {
     public static IApplicationDbContext Create()
     {
@@ -20,6 +21,13 @@ public class InMemoryDatabase
         dbContext.Database.EnsureDeleted();
         dbContext.Database.EnsureCreated();
 
+        dbContext.SeedMovies();
+
+        return dbContext;
+    }
+
+    public static ApplicationDbContext SeedMovies(this ApplicationDbContext dbContext)
+    {
         return dbContext;
     }
 }

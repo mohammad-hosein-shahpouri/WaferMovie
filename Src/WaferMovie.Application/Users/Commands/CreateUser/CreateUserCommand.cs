@@ -25,7 +25,8 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CrudR
         var user = request.Adapt<User>();
         user.NormalizedEmail = request.Email.ToUpper();
         user.NormalizedUserName = request.UserName.ToUpper();
-
+        user.ConcurrencyStamp = Guid.NewGuid().ToString();
+        user.SecurityStamp = Guid.NewGuid().ToString();
         var passwordHash = passwordHasher.HashPassword(user, request.Password);
 
         user.PasswordHash = passwordHash;

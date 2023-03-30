@@ -25,7 +25,7 @@ public class CreateUserCommandValidator : UserCoreModelValidator<CreateUserComma
         RuleFor(r => r.Password)
             .NotEmpty()
             .WithMessage("Password is required")
-            .Matches(new Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$"))
+            .Matches(new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\!\@\#\$\^\&\*\-]{8,}$"))
             .WithMessage("Password must contain at least one letter and one number");
 
         RuleFor(r => r.PasswordConfirmation)
