@@ -1,9 +1,9 @@
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using AspNetCore.SpaServices.ViteDevelopmentServer;
 using WaferMovie.Application;
 using WaferMovie.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+var isDevelopment = builder.Environment.IsDevelopment();
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -21,20 +21,33 @@ builder.Services.AddApiVersioning(o =>
     o.DefaultApiVersion = new ApiVersion(1, 0);
     o.ReportApiVersions = true;
 });
+builder.Services
+    .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (isDevelopment)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseRouting();
 app.UseHttpsRedirection();
 
+app.UseSpaStaticFiles();
 app.UseAuthorization();
 
-app.MapControllers();
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+app.UseEndpoints(endpoints => endpoints.MapControllers());
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+
+app.UseSpa(spa =>
+{
+    spa.Options.SourcePath = "ClientApp";
+    //spa.Options.DevServerPort = 4173;
+
+    if (isDevelopment) spa.UseViteDevelopmentServer("dev");
+});
 
 app.Run();
