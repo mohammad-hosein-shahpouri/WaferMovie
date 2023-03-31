@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    outline: none !important;
+}
+
 :root {
-    --error: #ff6a00;
+    --primary: #00235B;
+    --secondary: #EA5455;
+    --warning: #F7C04A;
+    --error: #CF0A0A;
+    --success: #539165;
+    --info: #19A7CE;
+    --dark: #222222;
+    --light: #F9F5EB;
 }

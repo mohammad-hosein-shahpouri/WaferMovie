@@ -1,21 +1,34 @@
 import { useCallback, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
 import { Button, ThemeProvider, createTheme } from '@mui/material'
 
 function App() {
     const [count, setCount] = useState(0)
-
     const getCssVariable = useCallback((name: string) => getComputedStyle(document.body).getPropertyValue(name).trim(), [])
-
     const theme = createTheme({
         palette: {
+            primary: {
+                main: getCssVariable("--primary")
+            },
+            secondary: {
+                main: getCssVariable("--secondary")
+            },
+            warning: {
+                main: getCssVariable("--warning")
+            },
             error: {
                 main: getCssVariable("--error")
+            },
+            success: {
+                main: getCssVariable("--success")
+            },
+            info: {
+                main: getCssVariable("--info")
             }
         }
     })
+
     return (
         <ThemeProvider theme={theme}>
             <div className="App">
@@ -29,7 +42,7 @@ function App() {
                 </div>
                 <h1>Vite + React</h1>
                 <div className="card">
-                    <Button variant="contained" color="error"
+                    <Button variant="contained" color="success" className="rounded-full"
                         onClick={() => setCount((count) => count + 1)}>
                         count is {count}
                     </Button>
