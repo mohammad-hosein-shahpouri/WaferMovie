@@ -1,4 +1,4 @@
-﻿using WaferMovie.Application.Movies.Commands.CreateMovieCommand;
+﻿using WaferMovie.Application.Movies.Commands.CreateMovie;
 
 namespace WaferMovie.Application.Test.Movies.Commands;
 
@@ -21,10 +21,9 @@ public class CreateMovieCommandTest
     [Fact]
     public async Task ShouldCreateMovie()
     {
-        var command = new CreateMovieCommand
+        var command = new CreateMovieCommand("tt1825683")
         {
             Description = "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future and must confront a challenger from his country's past.",
-            IMDB = "tt1825683",
             IsFree = true,
             Length = 134,
             OutYear = 2018,
@@ -49,7 +48,7 @@ public class CreateMovieCommandTest
     [Fact]
     public async Task ShouldHaveValidationError()
     {
-        var command = new CreateMovieCommand();
+        var command = new CreateMovieCommand("");
 
         var result = await mediator.Send(command);
 

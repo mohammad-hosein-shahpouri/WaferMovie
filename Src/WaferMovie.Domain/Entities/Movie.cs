@@ -24,5 +24,8 @@ public class Movie : IEntityTypeConfiguration<Movie>
 
         builder.Property(p => p.IMDB).HasMaxLength(20);
         builder.HasIndex(i => i.IMDB).IsUnique();
+
+        builder.Property(p => p.Title).HasMaxLength(100);
+        builder.Property(p => p.Description).HasMaxLength(500);
     }
 }

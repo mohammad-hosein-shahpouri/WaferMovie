@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Domain.Entities;
 
-public class Serie : IEntityTypeConfiguration<Movie>
+public class Serie : IEntityTypeConfiguration<Serie>
 {
     public int Id { get; set; }
     public string IMDB { get; set; } = default!;
@@ -13,19 +13,22 @@ public class Serie : IEntityTypeConfiguration<Movie>
     public string? StreamNetwork { get; set; }
 
     //public Days ShowDay { get; set; }
-    public int FirstSeasonYear { get; set; } = DateTime.Now.Year;
+    public int FirstSeasonYear { get; set; }
 
     public int? LastSeasonYear { get; set; }
 
-    //public TVAgeRestriction AgeRestriction { get; set; }
+    public SerieAgeRestriction AgeRestriction { get; set; }
     public DateTime? LastEpisodeDate { get; set; } = null;
 
     public virtual IEnumerable<Season> Seasons { get; set; } = new List<Season>();
 
-    public void Configure(EntityTypeBuilder<Movie> builder)
+    public void Configure(EntityTypeBuilder<Serie> builder)
     {
         builder.HasKey(pk => pk.Id);
         builder.Property(p => p.IMDB).HasMaxLength(20);
         builder.HasIndex(i => i.IMDB).IsUnique();
+
+        builder.Property(p => p.Title).HasMaxLength(100);
+        builder.Property(p => p.Description).HasMaxLength(500);
     }
 }

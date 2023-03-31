@@ -1,4 +1,4 @@
-﻿namespace WaferMovie.Application.Movies.Commands.CreateMovieCommand;
+﻿namespace WaferMovie.Application.Movies.Commands.CreateMovie;
 
 public class CreateMovieCommandValidator : MovieCoreModelValidator<CreateMovieCommand>
 {
