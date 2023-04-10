@@ -1,7 +1,7 @@
 ﻿namespace WaferMovie.Application.Movies.Commands.CreateMovie;
 
 [ValidateNever]
-public record CreateMovieCommand : MovieCoreModel, IRequest<CrudResult<Movie>>
+public record CreateMovieCommand : MovieCoreCommand, IRequest<CrudResult<Movie>>
 {
     public string IMDB { get; set; } = default!;
     public MovieAgeRestriction AgeRestriction { get; set; }

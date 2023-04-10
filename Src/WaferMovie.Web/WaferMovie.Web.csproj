@@ -8,6 +8,7 @@
 		<TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
 		<SpaRoot>ClientApp\</SpaRoot>
 		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+		<UserSecretsId>0a1bb62d-54c8-46c2-903c-682af5bc91a5</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>

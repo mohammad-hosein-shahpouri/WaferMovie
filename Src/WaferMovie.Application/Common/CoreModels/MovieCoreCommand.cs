@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Application.Common.CoreModels;
 
-public record MovieCoreModel
+public record MovieCoreCommand
 {
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;

@@ -1,4 +1,5 @@
 ﻿using WaferMovie.Application.Movies.Commands.CreateMovie;
+using WaferMovie.Application.Movies.Queries.GetAllMovies;
 
 namespace WaferMovie.Web.Controllers;
 
@@ -14,10 +15,11 @@ public class MoviesController : ControllerBase
         this.mediator = mediator;
     }
 
+    [HttpGet("All")]
+    public async Task<ActionResult<CrudResult<List<Movie>>>> GetAll(CancellationToken cancellationToken)
+        => await mediator.Send(new GetAllMoviesQuery(), cancellationToken);
+
     [HttpPost("Create")]
-    public async Task<IActionResult> CreateMovie(CreateMovieCommand command)
-    {
-        var result = await mediator.Send(command);
-        return result.Succeeded ? Ok(result) : BadRequest(result);
-    }
+    public async Task<ActionResult<CrudResult<Movie>>> CreateMovie(CreateMovieCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 }

@@ -15,9 +15,6 @@ public class SeriesController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<IActionResult> Create(CreateSerieCommand command)
-    {
-        var result = await mediator.Send(command);
-        return result.Succeeded ? Ok(result) : BadRequest(result);
-    }
+    public async Task<ActionResult<CrudResult<Serie>>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 }
