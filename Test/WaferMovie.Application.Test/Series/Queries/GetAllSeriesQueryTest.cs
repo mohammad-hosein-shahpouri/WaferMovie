@@ -1,14 +1,14 @@
 ﻿using StackExchange.Redis;
-using WaferMovie.Application.Movies.Queries.GetAllMovies;
+using WaferMovie.Application.Series.Queries.GetAllSeries;
 
-namespace WaferMovie.Application.Test.Movies.Queries;
+namespace WaferMovie.Application.Test.Series.Queries;
 
-public class GetAllMoviesQueryTest
+public class GetAllSeriesQueryTest
 {
     private readonly IApplicationDbContext dbContext = InMemoryDatabase.Create();
     private readonly IMediator mediator;
 
-    public GetAllMoviesQueryTest()
+    public GetAllSeriesQueryTest()
     {
         var applicationAssembly = Assembly.Load("WaferMovie.Application");
         var mockCacheDb = new Mock<IDatabase>();
@@ -23,12 +23,12 @@ public class GetAllMoviesQueryTest
     }
 
     [Fact]
-    public async Task ShouldReturnAllMovies()
+    public async Task ShouldReturnAllSeries()
     {
-        var result = await mediator.Send(new GetAllMoviesQuery());
+        var result = await mediator.Send(new GetAllSeriesQuery());
         result.Succeeded.ShouldBeTrue();
-        result.Data.Count.ShouldBe(dbContext.Movies.Count());
-        result.Data.All(a => dbContext.Movies.Contains(a)).ShouldBeTrue();
-        dbContext.Movies.All(a => result.Data.Contains(a)).ShouldBeTrue();
+        result.Data.Count.ShouldBe(dbContext.Series.Count());
+        result.Data.All(a => dbContext.Series.Contains(a)).ShouldBeTrue();
+        dbContext.Series.All(a => result.Data.Contains(a)).ShouldBeTrue();
     }
 }

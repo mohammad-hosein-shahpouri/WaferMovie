@@ -3,5 +3,7 @@
 public enum CrudStatus
 {
     Succeeded = 1,
-    ValidationError = 2,
+    Failed = 0,
+    ValidationError = -1,
+    NotFound = -2,
 }

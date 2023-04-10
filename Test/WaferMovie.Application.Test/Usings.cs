@@ -2,6 +2,7 @@ global using FluentValidation;
 global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
+global using Moq;
 global using Shouldly;
 global using System.Reflection;
 global using WaferMovie.Application.Common.Behaviors;
