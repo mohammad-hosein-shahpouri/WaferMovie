@@ -11,14 +11,7 @@ public class CreateUserCommandTest
 
     public CreateUserCommandTest()
     {
-        var applicationAssembly = Assembly.Load("WaferMovie.Application");
-        var services = new ServiceCollection();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
-        services.AddValidatorsFromAssembly(applicationAssembly);
-        services.AddSingleton(dbContext);
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-        services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
-        mediator = services.BuildServiceProvider().GetService<IMediator>()!;
+        mediator = Services.Configure(dbContext);
     }
 
     [Fact]

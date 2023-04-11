@@ -9,13 +9,7 @@ public class CreateMovieCommandTest
 
     public CreateMovieCommandTest()
     {
-        var applicationAssembly = Assembly.Load("WaferMovie.Application");
-        var services = new ServiceCollection();
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
-        services.AddValidatorsFromAssembly(applicationAssembly);
-        services.AddSingleton(dbContext);
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-        mediator = services.BuildServiceProvider().GetService<IMediator>()!;
+        mediator = Services.Configure(dbContext);
     }
 
     [Fact]

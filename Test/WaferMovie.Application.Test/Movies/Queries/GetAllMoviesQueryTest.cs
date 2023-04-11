@@ -10,16 +10,7 @@ public class GetAllMoviesQueryTest
 
     public GetAllMoviesQueryTest()
     {
-        var applicationAssembly = Assembly.Load("WaferMovie.Application");
-        var mockCacheDb = new Mock<IDatabase>();
-        var services = new ServiceCollection();
-
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(applicationAssembly));
-        services.AddValidatorsFromAssembly(applicationAssembly);
-        services.AddSingleton(dbContext);
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-        services.AddSingleton(mockCacheDb.Object);
-        mediator = services.BuildServiceProvider().GetService<IMediator>()!;
+        mediator = Services.Configure(dbContext); ;
     }
 
     [Fact]
