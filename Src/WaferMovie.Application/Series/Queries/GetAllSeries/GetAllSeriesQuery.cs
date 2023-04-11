@@ -27,7 +27,7 @@ public class GetAllSeriesQueryHandler : IRequestHandler<GetAllSeriesQuery, CrudR
             .ThenInclude(ti => ti.Episodes).ThenInclude(ti => ti.DownloadLinks).ToListAsync();
 
         var cacheValue = JsonConvert.SerializeObject(series);
-        await cacheDb.StringSetAsync(cacheKey, cacheValue);
+        await cacheDb.StringSetAsync(cacheKey, cacheValue, TimeSpan.FromDays(1));
 
         return new CrudResult<List<Serie>>(CrudStatus.Succeeded, series);
     }

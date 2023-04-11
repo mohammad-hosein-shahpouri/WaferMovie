@@ -17,7 +17,7 @@ public class SeriesController : ControllerBase
 
     [HttpGet("All")]
     public async Task<ActionResult<CrudResult<List<Serie>>>> GetAll(CancellationToken cancellationToken)
-    => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
+        => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
 
     [HttpPost("Create")]
     public async Task<ActionResult<CrudResult<Serie>>> Create(CreateSerieCommand command, CancellationToken cancellationToken)

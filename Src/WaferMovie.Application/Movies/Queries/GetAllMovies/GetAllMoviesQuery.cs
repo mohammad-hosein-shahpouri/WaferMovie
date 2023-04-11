@@ -25,7 +25,7 @@ public class GetAllMoviesQueryHandler : IRequestHandler<GetAllMoviesQuery, CrudR
 
         var movies = await dbContext.Movies.Include(i => i.DownloadLinks).ToListAsync();
         var cacheValue = JsonConvert.SerializeObject(movies);
-        await cacheDb.StringSetAsync(cacheKey, cacheValue);
+        await cacheDb.StringSetAsync(cacheKey, cacheValue, TimeSpan.FromDays(1));
 
         return new CrudResult<List<Movie>>(CrudStatus.Succeeded, movies);
     }

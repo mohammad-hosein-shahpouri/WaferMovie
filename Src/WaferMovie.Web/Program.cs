@@ -26,6 +26,17 @@ builder.Services
 
 var app = builder.Build();
 
+#region Localization
+
+var supportedCultures = new[] { "en-US", "fa-IR" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures).AddSupportedUICultures(supportedCultures);
+localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
+
+app.UseRequestLocalization(localizationOptions);
+
+#endregion Localization
+
 // Configure the HTTP request pipeline.
 if (isDevelopment)
 {

@@ -29,7 +29,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
 
     #endregion Movies
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         //foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         //{

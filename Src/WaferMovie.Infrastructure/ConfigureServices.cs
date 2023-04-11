@@ -25,14 +25,17 @@ public static class ConfigureServices
             .AddDefaultTokenProviders()
          .AddEntityFrameworkStores<ApplicationDbContext>();
 
+        services.AddLocalization();
+
         return services;
     }
 
     private static IServiceCollection AddDependencyInjection(this IServiceCollection services)
     {
-        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-        services.AddScoped<IJwtServices, JwtServices>();
-        services.AddScoped<IEmailServices, EmailServices>();
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>()
+            .AddScoped<IJwtServices, JwtServices>()
+            .AddScoped<IEmailServices, EmailServices>()
+            .AddSingleton<ILocalizationService, LocalizationService>();
 
         return services;
     }
