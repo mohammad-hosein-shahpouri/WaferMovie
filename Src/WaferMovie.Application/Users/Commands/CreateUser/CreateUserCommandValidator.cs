@@ -6,33 +6,28 @@ public class CreateUserCommandValidator : UserCoreModelValidator<CreateUserComma
 {
     private readonly IApplicationDbContext dbContext;
 
-    public CreateUserCommandValidator(IApplicationDbContext dbContext)
+    public CreateUserCommandValidator(IApplicationDbContext dbContext, ILocalizationService localization) : base(localization)
     {
         this.dbContext = dbContext;
 
-        RuleFor(r => r.Email)
-            .MustAsync(EmailAllowedAsync)
-            .WithMessage(m => "Another user already exists with this email");
+        RuleFor(r => r.Email).MustAsync(EmailAllowedAsync)
+            .WithMessage(m => string.Format(localization.FromValidationResources("Another {0} exists with this {1}"), localization.FromPropertyResources("user"), localization.FromPropertyResources(nameof(m.Email))));
 
-        RuleFor(r => r.UserName)
-            .MustAsync(UserNameAllowedAsync)
-            .WithMessage(m => "Another user already exists with this username");
+        RuleFor(r => r.UserName).MustAsync(UserNameAllowedAsync)
+            .WithMessage(m => string.Format(localization.FromValidationResources("Another {0} exists with this {1}"), localization.FromPropertyResources("user"), localization.FromPropertyResources(nameof(m.UserName))));
 
-        RuleFor(r => r.PhoneNumber)
-            .MustAsync(PhoneNumberAllowedAsync)
-            .WithMessage(m => "Another user already exists with this phone number");
+        RuleFor(r => r.PhoneNumber).MustAsync(PhoneNumberAllowedAsync)
+            .WithMessage(m => string.Format(localization.FromValidationResources("Another {0} exists with this {1}"), localization.FromPropertyResources("user"), localization.FromPropertyResources(nameof(m.PhoneNumber))));
 
-        RuleFor(r => r.Password)
-            .NotEmpty()
-            .WithMessage("Password is required")
+        RuleFor(r => r.Password).NotEmpty()
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.Password))))
             .Matches(new Regex(@"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\!\@\#\$\^\&\*\-]{8,}$"))
-            .WithMessage("Password must contain at least one letter and one number");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} must contain at least one letter and one number"), nameof(m.Password)));
 
-        RuleFor(r => r.PasswordConfirmation)
-            .NotEmpty()
-            .WithMessage("Password confirmation is required")
+        RuleFor(r => r.PasswordConfirmation).NotEmpty()
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), nameof(m.PasswordConfirmation)))
             .Equal(r => r.Password)
-            .WithMessage("Password confirmation must match password");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} must match {1}"), nameof(m.Password), nameof(m.PasswordConfirmation)));
     }
 
     private async Task<bool> EmailAllowedAsync(string email, CancellationToken cancellationToken)

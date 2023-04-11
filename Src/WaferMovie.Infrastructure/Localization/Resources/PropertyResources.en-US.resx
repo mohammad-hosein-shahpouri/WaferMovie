@@ -117,22 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Another {0} exists with this {1}" xml:space="preserve">
-    <value>{0} دیگری با این {1} وجود دارد</value>
+  <data name="PasswordConfirmation" xml:space="preserve">
+    <value>Password confirmation</value>
   </data>
-  <data name="{0}  is invalid" xml:space="preserve">
-    <value>{0} نامعتبر است</value>
-  </data>
-  <data name="{0} can not be longer than {1} characters" xml:space="preserve">
-    <value>{0} نمیتواند بیشتر از {1} کارکتر باشد</value>
-  </data>
-  <data name="{0} is required" xml:space="preserve">
-    <value>وارد کردن {0} الزامی است</value>
-  </data>
-  <data name="{0} must contain at least one letter and one number" xml:space="preserve">
-    <value>{0} باید حداقل شامل یک حرف و یک عدد باشد</value>
-  </data>
-  <data name="{0} must match {1}" xml:space="preserve">
-    <value>{0} باید {1} مطابقت داشته باشد</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone number</value>
   </data>
 </root>

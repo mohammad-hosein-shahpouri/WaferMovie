@@ -117,22 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Another {0} exists with this {1}" xml:space="preserve">
-    <value>{0} دیگری با این {1} وجود دارد</value>
+  <data name="Description" xml:space="preserve">
+    <value>توضیحات</value>
   </data>
-  <data name="{0}  is invalid" xml:space="preserve">
-    <value>{0} نامعتبر است</value>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
   </data>
-  <data name="{0} can not be longer than {1} characters" xml:space="preserve">
-    <value>{0} نمیتواند بیشتر از {1} کارکتر باشد</value>
+  <data name="IMDB" xml:space="preserve">
+    <value>شناسه IMDB</value>
   </data>
-  <data name="{0} is required" xml:space="preserve">
-    <value>وارد کردن {0} الزامی است</value>
+  <data name="movie" xml:space="preserve">
+    <value>فیلم</value>
   </data>
-  <data name="{0} must contain at least one letter and one number" xml:space="preserve">
-    <value>{0} باید حداقل شامل یک حرف و یک عدد باشد</value>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
   </data>
-  <data name="{0} must match {1}" xml:space="preserve">
-    <value>{0} باید {1} مطابقت داشته باشد</value>
+  <data name="Password" xml:space="preserve">
+    <value>کلمه عبور</value>
+  </data>
+  <data name="PasswordConfirmation" xml:space="preserve">
+    <value>تکرار کلمه عبور</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>شماره همراه</value>
+  </data>
+  <data name="serie" xml:space="preserve">
+    <value>سریال</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>کاربر</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>نام کاربری</value>
   </data>
 </root>

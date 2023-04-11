@@ -4,15 +4,15 @@ public class CreateSerieCommandValidator : SerieCoreModelValidator<CreateSerieCo
 {
     private readonly IApplicationDbContext dbContext;
 
-    public CreateSerieCommandValidator(IApplicationDbContext dbContext)
+    public CreateSerieCommandValidator(IApplicationDbContext dbContext, ILocalizationService localization) : base(localization)
     {
         this.dbContext = dbContext;
 
         RuleFor(r => r.IMDB)
             .NotEmpty()
-            .WithMessage(m => $"{nameof(m.IMDB)} is Required")
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.IMDB))))
             .MustAsync(IMDBAllowed)
-            .WithMessage((m => $"Another serie exists with this {nameof(m.IMDB)}"));
+            .WithMessage(m => string.Format(localization.FromValidationResources("Another {0} exists with this {1}"), localization.FromPropertyResources("serie"), localization.FromPropertyResources(nameof(m.IMDB))));
     }
 
     private async Task<bool> IMDBAllowed(string imdb, CancellationToken cancellationToken)

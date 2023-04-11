@@ -4,26 +4,26 @@ namespace WaferMovie.Application.Common.CoreModels.Validators;
 
 public abstract class UserCoreModelValidator<T> : AbstractValidator<T> where T : UserCoreModel
 {
-    public UserCoreModelValidator()
+    public UserCoreModelValidator(ILocalizationService localization)
     {
         RuleFor(r => r.Name).NotEmpty()
-            .WithMessage(m => $"{nameof(m.Name)} is required")
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.Name))))
             .MaximumLength(30)
-            .WithMessage(m => $"{nameof(m.Name)} can not be longer than 30 characters");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} can not be longer than {1} characters"), localization.FromPropertyResources(nameof(m.Name)), 30));
 
         RuleFor(r => r.Email).NotEmpty()
-         .WithMessage(m => $"{nameof(m.Email)} is required")
-         .EmailAddress()
-         .WithMessage(m => $"{nameof(m.Email)} is invalid");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.Email))))
+            .EmailAddress()
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is invalid"), localization.FromPropertyResources(nameof(m.Email))));
 
         RuleFor(r => r.PhoneNumber).NotEmpty()
-         .WithMessage(m => $"{nameof(m.PhoneNumber)} is required")
-         .Matches(new Regex(""))
-         .WithMessage(m => $"{nameof(m.PhoneNumber)} is invalid");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.PhoneNumber))))
+            .Matches(new Regex(""))
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is invalid"), localization.FromPropertyResources(nameof(m.PhoneNumber))));
 
         RuleFor(r => r.UserName).NotEmpty()
-         .WithMessage(m => $"{nameof(m.UserName)} is required")
-         .Matches(new Regex(""))
-         .WithMessage(m => $"{nameof(m.PhoneNumber)} is invalid");
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.UserName))))
+            .Matches(new Regex(""))
+            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is invalid"), localization.FromPropertyResources(nameof(m.UserName))));
     }
 }
