@@ -123,6 +123,9 @@
   <data name="Email" xml:space="preserve">
     <value>ایمیل</value>
   </data>
+  <data name="Id" xml:space="preserve">
+    <value>شناسه</value>
+  </data>
   <data name="IMDB" xml:space="preserve">
     <value>شناسه IMDB</value>
   </data>

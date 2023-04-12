@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Application.Common.CoreModels.Validators;
 
-public abstract class MovieCoreModelValidator<T> : AbstractValidator<T> where T : MovieCoreCommand
+public abstract class MovieCoreModelValidator<T> : AbstractValidator<T> where T : MovieCoreModel
 {
     public MovieCoreModelValidator(ILocalizationService localization)
     {

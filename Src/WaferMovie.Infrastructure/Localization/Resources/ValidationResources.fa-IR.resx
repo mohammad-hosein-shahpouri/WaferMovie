@@ -120,6 +120,9 @@
   <data name="Another {0} exists with this {1}" xml:space="preserve">
     <value>{0} دیگری با این {1} وجود دارد</value>
   </data>
+  <data name="No {0} found with this {1}" xml:space="preserve">
+    <value>{0} با این {1} پیدا نشد</value>
+  </data>
   <data name="{0}  is invalid" xml:space="preserve">
     <value>{0} نامعتبر است</value>
   </data>
