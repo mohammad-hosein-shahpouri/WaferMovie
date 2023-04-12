@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using StackExchange.Redis;
+﻿using StackExchange.Redis;
 
 namespace WaferMovie.Application.Movies.Queries.FindMovieById;
 

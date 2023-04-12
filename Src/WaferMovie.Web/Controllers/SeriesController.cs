@@ -1,4 +1,6 @@
-﻿using WaferMovie.Application.Series.Commands.CreateSerie;
+﻿using WaferMovie.Application.Movies.Queries.FindMovieById;
+using WaferMovie.Application.Series.Commands.CreateSerie;
+using WaferMovie.Application.Series.Queries.FindSerieById;
 using WaferMovie.Application.Series.Queries.GetAllSeries;
 
 namespace WaferMovie.Web.Controllers;
@@ -15,11 +17,23 @@ public class SeriesController : ControllerBase
         this.mediator = mediator;
     }
 
+    #region Query
+
     [HttpGet("All")]
     public async Task<ActionResult<CrudResult<List<Serie>>>> GetAll(CancellationToken cancellationToken)
         => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
 
+    [HttpGet("FindById/{id}")]
+    public async Task<ActionResult<CrudResult<Serie>>> FindById(int id, CancellationToken cancellationToken)
+        => await mediator.Send(new FindSerieByIdQuery(id), cancellationToken);
+
+    #endregion Query
+
+    #region Command
+
     [HttpPost("Create")]
     public async Task<ActionResult<CrudResult<Serie>>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
+
+    #endregion Command
 }
