@@ -1,6 +1,8 @@
 using AspNetCore.SpaServices.ViteDevelopmentServer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WaferMovie.Application;
 using WaferMovie.Infrastructure;
+using WaferMovie.Infrastructure.HealthCheck;
 
 var builder = WebApplication.CreateBuilder(args);
 var isDevelopment = builder.Environment.IsDevelopment();
@@ -23,6 +25,9 @@ builder.Services.AddApiVersioning(o =>
 });
 builder.Services
     .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
+
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>(nameof(DatabaseHealthCheck));
 
 var app = builder.Build();
 
@@ -52,6 +57,8 @@ app.UseAuthorization();
 #pragma warning disable ASP0014 // Suggest using top level route registrations
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 #pragma warning restore ASP0014 // Suggest using top level route registrations
+
+app.MapHealthChecks("/HealthCheck");
 
 app.UseSpa(spa =>
 {
