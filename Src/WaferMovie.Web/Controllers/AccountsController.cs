@@ -1,10 +1,11 @@
-﻿using WaferMovie.Application.Accounts.Queries;
+﻿using Microsoft.AspNetCore.Authorization;
+using WaferMovie.Application.Accounts.Queries;
 
 namespace WaferMovie.Web.Controllers;
 
-[Route("api/v{version}/[controller]/[action]")]
-[ApiController]
-[ApiVersion("1.0")]
+[Route("api/v{version}/[controller]")]
+[ApiController, ApiVersion("1.0")]
+[Authorize]
 public class AccountsController : ControllerBase
 {
     private readonly IMediator mediator;

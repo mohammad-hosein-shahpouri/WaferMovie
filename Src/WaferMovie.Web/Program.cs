@@ -1,5 +1,5 @@
 using AspNetCore.SpaServices.ViteDevelopmentServer;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Newtonsoft.Json;
 using WaferMovie.Application;
 using WaferMovie.Infrastructure;
 using WaferMovie.Infrastructure.HealthCheck;
@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 var isDevelopment = builder.Environment.IsDevelopment();
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -50,8 +51,8 @@ if (isDevelopment)
 }
 app.UseRouting();
 app.UseHttpsRedirection();
-
 app.UseSpaStaticFiles();
+app.UseAuthentication();
 app.UseAuthorization();
 
 #pragma warning disable ASP0014 // Suggest using top level route registrations
@@ -63,7 +64,7 @@ app.MapHealthChecks("/HealthCheck");
 app.UseSpa(spa =>
 {
     spa.Options.SourcePath = "ClientApp";
-    //spa.Options.DevServerPort = 4173;
+    spa.Options.DevServerPort = 4173;
 
     if (isDevelopment) spa.UseViteDevelopmentServer("dev");
 });
