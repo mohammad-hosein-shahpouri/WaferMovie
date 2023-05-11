@@ -8,11 +8,10 @@ public class CreateMovieCommandValidator : MovieCoreModelValidator<CreateMovieCo
     {
         this.dbContext = dbContext;
 
-        RuleFor(r => r.IMDB)
-            .NotEmpty()
-            .WithMessage(m => string.Format(localization.FromValidationResources("{0} is required"), localization.FromPropertyResources(nameof(m.IMDB))))
+        RuleFor(r => r.IMDB).NotEmpty()
+            .WithMessage(m => localization.FromValidationResources("{0} is required", localization.FromPropertyResources(nameof(m.IMDB))))
             .MustAsync(IMDBAllowed)
-            .WithMessage(m => string.Format(localization.FromValidationResources("Another {0} exists with this {1}"), localization.FromPropertyResources("movie"), localization.FromPropertyResources(nameof(m.IMDB))));
+            .WithMessage(m => localization.FromValidationResources("Another {0} exists with this {1}", localization.FromPropertyResources("movie"), localization.FromPropertyResources(nameof(m.IMDB))));
     }
 
     private async Task<bool> IMDBAllowed(string imdbId, CancellationToken cancellationToken)

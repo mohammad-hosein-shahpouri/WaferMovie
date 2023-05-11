@@ -21,9 +21,21 @@ public class LocalizationService : ILocalizationService
         propertyResourcesLocalizer = factory.Create(propertyResourcesType);
     }
 
-    public string FromSharedResources(string text) => sharedResourcesLocalizer[text];
+    public string FromSharedResources(string text)
+        => sharedResourcesLocalizer[text];
 
-    public string FromValidationResources(string text) => validationResourcesLocalizer[text];
+    public string FromSharedResources(string text, params object[] args)
+        => sharedResourcesLocalizer[text, args];
 
-    public string FromPropertyResources(string text) => propertyResourcesLocalizer[text];
+    public string FromValidationResources(string text)
+        => validationResourcesLocalizer[text];
+
+    public string FromValidationResources(string text, params object[] args)
+        => validationResourcesLocalizer[text, args];
+
+    public string FromPropertyResources(string text)
+        => propertyResourcesLocalizer[text];
+
+    public string FromPropertyResources(string text, params object[] args)
+        => propertyResourcesLocalizer[text, args];
 }
