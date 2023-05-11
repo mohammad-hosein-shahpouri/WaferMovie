@@ -19,7 +19,7 @@ public class FindMovieByIdQueryHandler : IRequestHandler<FindMovieByIdQuery, Cru
 
     public async Task<CrudResult<Movie>> Handle(FindMovieByIdQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = $"Movies:{request.Id}";
+        var cacheKey = $"WaferMovie:Movies:{request.Id}";
         var cacheResult = await cacheDb.StringGetAsync(cacheKey);
         if (!cacheResult.IsNullOrEmpty)
             return new CrudResult<Movie>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<Movie>(cacheResult!)!);

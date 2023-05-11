@@ -27,7 +27,7 @@ public class CreateMovieCommandHandler : IRequestHandler<CreateMovieCommand, Cru
         await dbContext.Movies.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        await cacheDb.KeyDeleteAsync("Movies:All");
+        await cacheDb.KeyDeleteAsync("WaferMovie:Movies:All");
 
         return new CrudResult<Movie>(CrudStatus.Succeeded, entity);
     }

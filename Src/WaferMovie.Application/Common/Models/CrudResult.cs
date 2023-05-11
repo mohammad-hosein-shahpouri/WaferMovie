@@ -35,6 +35,10 @@ public class CrudResult<TEntity> : CrudResult
     {
     }
 
+    public CrudResult(CrudStatus status) : base(status)
+    {
+    }
+
     public CrudResult(CrudStatus status, string message) : base(status, message)
     {
     }

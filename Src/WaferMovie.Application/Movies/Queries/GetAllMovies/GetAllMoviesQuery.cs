@@ -17,7 +17,7 @@ public class GetAllMoviesQueryHandler : IRequestHandler<GetAllMoviesQuery, CrudR
 
     public async Task<CrudResult<List<Movie>>> Handle(GetAllMoviesQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = "Movies:All";
+        var cacheKey = "WaferMovie:Movies:All";
         var cacheResult = await cacheDb.StringGetAsync(cacheKey);
         if (!cacheResult.IsNullOrEmpty)
             return new CrudResult<List<Movie>>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<List<Movie>>(cacheResult!)!);

@@ -27,7 +27,7 @@ public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, Cru
         await dbContext.Series.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        await cacheDb.KeyDeleteAsync("Series:All");
+        await cacheDb.KeyDeleteAsync("WaferMovie:Series:All");
 
         return new CrudResult<Serie>(CrudStatus.Succeeded, entity);
     }

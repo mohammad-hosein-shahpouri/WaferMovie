@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace WaferMovie.Domain.Entities;
 
 public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
 {
-    public string? Name { get; set; }
+    public string Name { get; set; } = default!;
 
-    // TODO: Gender Enum
-    //public GenderType? Gender { get; set; }
+    public Gender Gender { get; set; } = Gender.PreferNotToSay;
 
-    public int AccountCharge { get; set; }
+    public int AccountBalance { get; set; }
     public DateTime? BirthDate { get; set; }
 
     public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
@@ -19,5 +17,33 @@ public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.ToTable("Users");
+
+        builder.Property(p => p.Name).IsRequired()
+            .HasMaxLength(63);
+
+        builder.Property(p => p.Gender)
+            .HasDefaultValue(Gender.PreferNotToSay);
+
+        builder.Property(p => p.Email)
+            .HasMaxLength(127);
+        builder.Property(p => p.NormalizedEmail)
+            .HasMaxLength(127);
+
+        builder.Property(p => p.UserName)
+            .HasMaxLength(63);
+        builder.Property(p => p.NormalizedUserName)
+            .HasMaxLength(63);
+
+        builder.Property(p => p.PasswordHash)
+            .HasMaxLength(255);
+
+        builder.Property(p => p.PhoneNumber)
+            .HasMaxLength(15);
+
+        builder.Property(p => p.ConcurrencyStamp)
+            .HasMaxLength(255);
+
+        builder.Property(p => p.SecurityStamp)
+            .HasMaxLength(255);
     }
 }
