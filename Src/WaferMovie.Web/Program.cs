@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 var isDevelopment = builder.Environment.IsDevelopment();
 // Add services to the container.
 
-builder.Services.AddControllers().AddNewtonsoftJson(options =>
+builder.Services.AddControllers(c =>
+{
+    c.AllowEmptyInputInBodyModelBinding = true;
+}).AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

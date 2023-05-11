@@ -83,7 +83,7 @@ public static class ConfigureServices
     private static IServiceCollection AddDependencyInjection(this IServiceCollection services)
     {
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>()
-            .AddScoped<IJwtServices, JwtServices>()
+            .AddScoped<ITokenServices, TokenServices>()
             .AddScoped<IEmailServices, EmailServices>()
             .AddSingleton<ILocalizationService, LocalizationService>();
 

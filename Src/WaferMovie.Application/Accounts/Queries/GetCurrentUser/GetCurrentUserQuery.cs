@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using StackExchange.Redis;
 
-namespace WaferMovie.Application.Accounts.Queries;
+namespace WaferMovie.Application.Accounts.Queries.GetCurrentUser;
 
 public record GetCurrentUserQuery : IRequest<CrudResult<GetCurrentUserQueryDto>>;
 

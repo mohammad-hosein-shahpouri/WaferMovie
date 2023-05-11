@@ -3,8 +3,7 @@
 namespace WaferMovie.Web.Controllers;
 
 [Route("api/v{version}/[controller]")]
-[ApiController]
-[ApiVersion("1.0")]
+[ApiController, ApiVersion("1.0")]
 public class UsersController : ControllerBase
 {
     private readonly IMediator mediator;

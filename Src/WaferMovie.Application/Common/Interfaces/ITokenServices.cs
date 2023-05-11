@@ -2,7 +2,7 @@
 
 namespace WaferMovie.Application.Common.Interfaces;
 
-public interface IJwtServices
+public interface ITokenServices
 {
-    string GenerateAsync(User user);
+    string GenerateJwtAsync(User user);
 }

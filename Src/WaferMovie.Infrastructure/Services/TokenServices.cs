@@ -9,16 +9,16 @@ using WaferMovie.Domain.Entities;
 
 namespace WaferMovie.Infrastructure.Services;
 
-public class JwtServices : IJwtServices
+public class TokenServices : ITokenServices
 {
     private readonly IConfiguration configuration;
 
-    public JwtServices(IConfiguration configuration)
+    public TokenServices(IConfiguration configuration)
     {
         this.configuration = configuration;
     }
 
-    public string GenerateAsync(User user)
+    public string GenerateJwtAsync(User user)
     {
         var secretKey = Encoding.UTF8.GetBytes(configuration["Auth:JWTBearer:SecretKey"]!);
         var signingCredentials = new SigningCredentials(

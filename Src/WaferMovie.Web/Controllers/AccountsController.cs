@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using WaferMovie.Application.Accounts.Queries;
+using WaferMovie.Application.Accounts.Commands.Login;
+using WaferMovie.Application.Accounts.Queries.GetCurrentUser;
 
 namespace WaferMovie.Web.Controllers;
 
@@ -18,4 +19,9 @@ public class AccountsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<CrudResult<GetCurrentUserQueryDto>>> GetCurrentUser(CancellationToken cancellationToken)
         => await mediator.Send(new GetCurrentUserQuery(), cancellationToken);
+
+    [AllowAnonymous]
+    [HttpPost("[action]")]
+    public async Task<ActionResult<CrudResult>> Login(LoginCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
 }

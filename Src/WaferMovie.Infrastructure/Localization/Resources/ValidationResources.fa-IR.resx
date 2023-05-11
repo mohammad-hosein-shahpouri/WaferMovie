@@ -123,11 +123,11 @@
   <data name="No {0} found with this {1}" xml:space="preserve">
     <value>{0} با این {1} پیدا نشد</value>
   </data>
-  <data name="{0}  is invalid" xml:space="preserve">
-    <value>{0} نامعتبر است</value>
+  <data name="{0} can not be longer than {{MaxLength}} characters" xml:space="preserve">
+    <value>{0} نمیتواند بیشتر از {{MaxLength}} کارکتر باشد</value>
   </data>
-  <data name="{0} can not be longer than {1} characters" xml:space="preserve">
-    <value>{0} نمیتواند بیشتر از {1} کارکتر باشد</value>
+  <data name="{0} is invalid" xml:space="preserve">
+    <value>{0} نامعتبر است</value>
   </data>
   <data name="{0} is required" xml:space="preserve">
     <value>وارد کردن {0} الزامی است</value>
