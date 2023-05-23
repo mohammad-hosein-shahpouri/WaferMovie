@@ -14,6 +14,6 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("Create")]
-    public async Task<ActionResult<CrudResult<User>>> Create(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult<User>> Create(CreateUserCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 }

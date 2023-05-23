@@ -17,7 +17,9 @@ public static class ConfigureServices
 
     private static IServiceCollection AddPipelines(this IServiceCollection services)
     {
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(HttpStatusCodePipelineBehavior<,>));
+
         return services;
     }
 }

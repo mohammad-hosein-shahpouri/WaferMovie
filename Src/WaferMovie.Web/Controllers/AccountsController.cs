@@ -17,11 +17,11 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<CrudResult<GetCurrentUserQueryDto>>> GetCurrentUser(CancellationToken cancellationToken)
+    public async Task<CrudResult<GetCurrentUserQueryDto>> GetCurrentUser(CancellationToken cancellationToken)
         => await mediator.Send(new GetCurrentUserQuery(), cancellationToken);
 
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task<ActionResult<CrudResult>> Login(LoginCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult> Login(LoginCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 }

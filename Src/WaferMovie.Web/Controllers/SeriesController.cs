@@ -20,11 +20,11 @@ public class SeriesController : ControllerBase
     #region Query
 
     [HttpGet("All")]
-    public async Task<ActionResult<CrudResult<List<Serie>>>> GetAll(CancellationToken cancellationToken)
+    public async Task<CrudResult<List<Serie>>> GetAll(CancellationToken cancellationToken)
         => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
 
     [HttpGet("FindById/{id}")]
-    public async Task<ActionResult<CrudResult<Serie>>> FindById(int id, CancellationToken cancellationToken)
+    public async Task<CrudResult<Serie>> FindById(int id, CancellationToken cancellationToken)
         => await mediator.Send(new FindSerieByIdQuery(id), cancellationToken);
 
     #endregion Query
@@ -32,7 +32,7 @@ public class SeriesController : ControllerBase
     #region Command
 
     [HttpPost("Create")]
-    public async Task<ActionResult<CrudResult<Serie>>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult<Serie>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
     #endregion Command
