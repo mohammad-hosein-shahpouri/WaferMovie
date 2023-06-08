@@ -39,7 +39,7 @@ public static class ConfigureServices
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
             {
-                var secretkey = Encoding.UTF8.GetBytes(configuration.GetValue<string>("Auth:JwtBearer:SecretKey")!);
+                var secretKey = Encoding.UTF8.GetBytes(configuration.GetValue<string>("Auth:JwtBearer:SecretKey")!);
                 // var encryptionkey = Encoding.UTF8.GetBytes(configuration.GetValue<string>("Auth:JwtBearer:EncryptionKey"));
 
                 var validationParameters = new TokenValidationParameters
@@ -48,7 +48,7 @@ public static class ConfigureServices
                     RequireSignedTokens = true,
 
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(secretkey),
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
 
                     RequireExpirationTime = false,
                     ValidateLifetime = false,

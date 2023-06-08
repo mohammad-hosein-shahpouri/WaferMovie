@@ -29,6 +29,21 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
 
     #endregion Movies
 
+    #region Groups
+
+    public virtual DbSet<Group> Groups { get; set; } = default!;
+    public virtual DbSet<MovieGroup> MovieGroup { get; set; } = default!;
+    public virtual DbSet<SerieGroup> SerieGroups { get; set; } = default!;
+
+    #endregion Groups
+
+    #region Rates
+
+    public virtual DbSet<MovieRate> MovieRate { get; set; } = default!;
+    public virtual DbSet<SerieRate> SerieRate { get; set; } = default!;
+
+    #endregion Rates
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
         //foreach (var entry in ChangeTracker.Entries<BaseEntity>())

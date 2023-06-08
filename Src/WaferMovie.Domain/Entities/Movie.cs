@@ -17,6 +17,8 @@ public class Movie : IEntityTypeConfiguration<Movie>
     public MovieAgeRestriction AgeRestriction { get; set; }
 
     public virtual ICollection<MovieDownloadLink> DownloadLinks { get; set; } = new List<MovieDownloadLink>();
+    public virtual ICollection<MovieGroup> Groups { get; set; } = new List<MovieGroup>();
+    public virtual ICollection<MovieRate> Rates { get; set; } = new List<MovieRate>();
 
     public void Configure(EntityTypeBuilder<Movie> builder)
     {

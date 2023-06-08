@@ -21,6 +21,8 @@ public class Serie : IEntityTypeConfiguration<Serie>
     public DateTime? LastEpisodeDate { get; set; } = null;
 
     public virtual IEnumerable<Season> Seasons { get; set; } = new List<Season>();
+    public virtual IEnumerable<SerieGroup> Groups { get; set; } = new List<SerieGroup>();
+    public virtual IEnumerable<SerieRate> Rates { get; set; } = new List<SerieRate>();
 
     public void Configure(EntityTypeBuilder<Serie> builder)
     {

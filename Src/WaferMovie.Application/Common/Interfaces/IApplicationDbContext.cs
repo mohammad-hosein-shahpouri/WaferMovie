@@ -32,5 +32,20 @@ public interface IApplicationDbContext : IDisposable
 
     #endregion Movies
 
+    #region Groups
+
+    DbSet<Group> Groups { get; set; }
+    DbSet<MovieGroup> MovieGroup { get; set; }
+    DbSet<SerieGroup> SerieGroups { get; set; }
+
+    #endregion Groups
+
+    #region Rates
+
+    DbSet<MovieRate> MovieRate { get; set; }
+    DbSet<SerieRate> SerieRate { get; set; }
+
+    #endregion Rates
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

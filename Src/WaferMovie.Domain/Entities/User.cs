@@ -13,6 +13,8 @@ public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
 
     public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
     public virtual ICollection<UserClaim> Claims { get; set; } = new List<UserClaim>();
+    public virtual ICollection<SerieRate> SerieRates { get; set; } = new List<SerieRate>();
+    public virtual ICollection<MovieRate> MovieRates { get; set; } = new List<MovieRate>();
 
     public void Configure(EntityTypeBuilder<User> builder)
     {
