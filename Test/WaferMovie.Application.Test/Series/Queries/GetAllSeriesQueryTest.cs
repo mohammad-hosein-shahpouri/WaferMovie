@@ -19,7 +19,7 @@ public class GetAllSeriesQueryTest
         var result = await mediator.Send(new GetAllSeriesQuery());
         result.Succeeded.ShouldBeTrue();
         result.Data.Count.ShouldBe(dbContext.Series.Count());
-        result.Data.All(a => dbContext.Series.Contains(a)).ShouldBeTrue();
-        dbContext.Series.All(a => result.Data.Contains(a)).ShouldBeTrue();
+        result.Data.All(a => dbContext.Series.Select(s => s.Id).Contains(a.Id)).ShouldBeTrue();
+        dbContext.Series.All(a => result.Data.Select(s => s.Id).Contains(a.Id)).ShouldBeTrue();
     }
 }
