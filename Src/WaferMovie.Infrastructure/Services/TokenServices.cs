@@ -57,6 +57,7 @@ public class TokenServices : ITokenServices
         {
             new("Developer", "Mohammad Hosein Shahpouri"),
             new(ClaimTypes.Name, user.NormalizedUserName!),
+            new("UserId", user.Id.ToString()),
             new(new ClaimsIdentityOptions().SecurityStampClaimType, user.SecurityStamp ?? string.Empty),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };

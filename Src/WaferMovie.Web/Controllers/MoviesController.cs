@@ -19,7 +19,7 @@ public class MoviesController : ControllerBase
     #region Query
 
     [HttpGet("All")]
-    public async Task<CrudResult<List<Movie>>> GetAll(CancellationToken cancellationToken)
+    public async Task<CrudResult<List<GetAllMoviesQueryDto>>> GetAll(CancellationToken cancellationToken)
         => await mediator.Send(new GetAllMoviesQuery(), cancellationToken);
 
     [HttpGet("FindById/{id}")]

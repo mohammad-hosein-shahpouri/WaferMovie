@@ -12,6 +12,7 @@ public static class ConfigureServices
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddPipelines();
+        services.AddMapster();
         return services;
     }
 
@@ -19,6 +20,16 @@ public static class ConfigureServices
     {
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(HttpStatusCodePipelineBehavior<,>));
+
+        return services;
+    }
+
+    private static IServiceCollection AddMapster(this IServiceCollection services)
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+        IList<IRegister> registers = config.Scan(Assembly.GetExecutingAssembly());
+        config.Apply(registers);
+        services.AddSingleton(config);
 
         return services;
     }

@@ -12,6 +12,5 @@ public class LoginCommandDto : IRegister
 
     public void Register(TypeAdapterConfig config)
     {
-        throw new NotImplementedException();
     }
 }

@@ -7,7 +7,10 @@ public class CrudResult
     }
 
     public CrudResult(CrudStatus status)
-        => Status = status;
+    {
+        Status = status;
+        Messages.Add(status.ToString());
+    }
 
     public CrudResult(CrudStatus status, string message)
     {

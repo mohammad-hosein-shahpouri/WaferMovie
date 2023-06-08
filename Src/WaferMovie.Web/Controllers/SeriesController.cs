@@ -20,7 +20,7 @@ public class SeriesController : ControllerBase
     #region Query
 
     [HttpGet("All")]
-    public async Task<CrudResult<List<Serie>>> GetAll(CancellationToken cancellationToken)
+    public async Task<CrudResult<List<GetAllSeriesQueryDto>>> GetAll(CancellationToken cancellationToken)
         => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
 
     [HttpGet("FindById/{id}")]

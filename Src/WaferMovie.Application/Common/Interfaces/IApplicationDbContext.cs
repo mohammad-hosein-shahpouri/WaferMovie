@@ -18,32 +18,32 @@ public interface IApplicationDbContext : IDisposable
 
     #region Series
 
-    DbSet<Serie> Series { get; set; }
-    DbSet<Season> Seasons { get; set; }
-    DbSet<Episode> Episodes { get; set; }
-    DbSet<SerieDownloadLink> SerieDownloadLinks { get; set; }
+    DbSet<Serie> Series { get; }
+    DbSet<Season> Seasons { get; }
+    DbSet<Episode> Episodes { get; }
+    DbSet<SerieDownloadLink> SerieDownloadLinks { get; }
 
     #endregion Series
 
     #region Movies
 
-    DbSet<Movie> Movies { get; set; }
-    DbSet<MovieDownloadLink> MovieDownloadLinks { get; set; }
+    DbSet<Movie> Movies { get; }
+    DbSet<MovieDownloadLink> MovieDownloadLinks { get; }
 
     #endregion Movies
 
     #region Groups
 
-    DbSet<Group> Groups { get; set; }
-    DbSet<MovieGroup> MovieGroup { get; set; }
-    DbSet<SerieGroup> SerieGroups { get; set; }
+    DbSet<Group> Groups { get; }
+    DbSet<MovieGroup> MovieGroup { get; }
+    DbSet<SerieGroup> SerieGroups { get; }
 
     #endregion Groups
 
     #region Rates
 
-    DbSet<MovieRate> MovieRate { get; set; }
-    DbSet<SerieRate> SerieRate { get; set; }
+    DbSet<MovieRate> MovieRates { get; }
+    DbSet<SerieRate> SerieRates { get; }
 
     #endregion Rates
 

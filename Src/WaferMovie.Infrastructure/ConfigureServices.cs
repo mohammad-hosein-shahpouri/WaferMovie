@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -69,7 +70,8 @@ public static class ConfigureServices
                 {
                     OnMessageReceived = context =>
                     {
-                        context.Token = context.Request.Headers[HeaderNames.Authorization];
+                        var headerValue = context.Request.Headers[HeaderNames.Authorization].ToString();
+                        context.Token = headerValue.StartsWith(JwtBearerDefaults.AuthenticationScheme, StringComparison.OrdinalIgnoreCase) ? headerValue[6..].Trim() : headerValue;
                         return Task.CompletedTask;
                     }
                 };
@@ -82,10 +84,12 @@ public static class ConfigureServices
 
     private static IServiceCollection AddDependencyInjection(this IServiceCollection services)
     {
-        services.AddScoped<IApplicationDbContext, ApplicationDbContext>()
+        services.AddTransient<IHttpContextAccessor, HttpContextAccessor>()
+            .AddScoped<IApplicationDbContext, ApplicationDbContext>()
             .AddScoped<ITokenServices, TokenServices>()
             .AddScoped<IEmailServices, EmailServices>()
-            .AddSingleton<ILocalizationService, LocalizationService>();
+            .AddSingleton<ILocalizationService, LocalizationService>()
+            .AddScoped<ICurrentUserService, CurrentUserService>();
 
         return services;
     }
