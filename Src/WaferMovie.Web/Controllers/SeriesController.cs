@@ -1,5 +1,6 @@
-﻿using WaferMovie.Application.Movies.Queries.FindMovieById;
-using WaferMovie.Application.Series.Commands.CreateSerie;
+﻿using WaferMovie.Application.Series.Commands.CreateSerie;
+using WaferMovie.Application.Series.Commands.DeleteSerie;
+using WaferMovie.Application.Series.Commands.UpdateSerie;
 using WaferMovie.Application.Series.Queries.FindSerieById;
 using WaferMovie.Application.Series.Queries.GetAllSeries;
 
@@ -32,8 +33,16 @@ public class SeriesController : ControllerBase
     #region Command
 
     [HttpPost("Create")]
-    public async Task<CrudResult<int>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult<int>> CreateSerie(CreateSerieCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
+
+    [HttpPut("Update")]
+    public async Task<CrudResult<int>> UpdateSerie(UpdateSerieCommand command, CancellationToken cancellationToken)
+     => await mediator.Send(command, cancellationToken);
+
+    [HttpDelete("Delete")]
+    public async Task<CrudResult<int>> DeleteSerie(DeleteSerieCommand command, CancellationToken cancellationToken)
+     => await mediator.Send(command, cancellationToken);
 
     #endregion Command
 }
