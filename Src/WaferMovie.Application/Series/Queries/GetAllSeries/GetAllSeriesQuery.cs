@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using StackExchange.Redis;
-
-namespace WaferMovie.Application.Series.Queries.GetAllSeries;
+﻿namespace WaferMovie.Application.Series.Queries.GetAllSeries;
 
 public record GetAllSeriesQuery : IRequest<CrudResult<List<GetAllSeriesQueryDto>>>;
 

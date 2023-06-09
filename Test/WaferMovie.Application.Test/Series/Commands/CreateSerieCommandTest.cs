@@ -29,7 +29,7 @@ public class CreateSerieCommandTest
         };
 
         var result = await mediator.Send(command);
-        var newSerie = await dbContext.Series.FirstOrDefaultAsync(f => f.Id == result.Data.Id);
+        var newSerie = await dbContext.Series.FirstOrDefaultAsync(f => f.Id == result.Data);
 
         result.Succeeded.ShouldBeTrue();
         result.Status.ShouldBe(CrudStatus.Succeeded);

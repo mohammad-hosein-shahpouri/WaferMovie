@@ -1,4 +1,6 @@
 ﻿using WaferMovie.Application.Movies.Commands.CreateMovie;
+using WaferMovie.Application.Movies.Commands.DeleteMovie;
+using WaferMovie.Application.Movies.Commands.UpdateMovie;
 using WaferMovie.Application.Movies.Queries.FindMovieById;
 using WaferMovie.Application.Movies.Queries.GetAllMovies;
 
@@ -23,7 +25,7 @@ public class MoviesController : ControllerBase
         => await mediator.Send(new GetAllMoviesQuery(), cancellationToken);
 
     [HttpGet("FindById/{id}")]
-    public async Task<CrudResult<Movie>> FindById(int id, CancellationToken cancellationToken)
+    public async Task<CrudResult<FindMovieByIdQueryDto>> FindById(int id, CancellationToken cancellationToken)
         => await mediator.Send(new FindMovieByIdQuery(id), cancellationToken);
 
     #endregion Query
@@ -31,7 +33,15 @@ public class MoviesController : ControllerBase
     #region Command
 
     [HttpPost("Create")]
-    public async Task<CrudResult<Movie>> CreateMovie(CreateMovieCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult<int>> CreateMovie(CreateMovieCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
+
+    [HttpPut("Update")]
+    public async Task<CrudResult<int>> UpdateMovie(UpdateMovieCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
+
+    [HttpDelete("Delete")]
+    public async Task<CrudResult<int>> DeleteMovie(DeleteMovieCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
     #endregion Command

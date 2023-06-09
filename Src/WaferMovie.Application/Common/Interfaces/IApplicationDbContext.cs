@@ -10,7 +10,7 @@ public interface IApplicationDbContext : IDisposable
     DbSet<UserClaim> UserClaims { get; set; }
     DbSet<IdentityUserLogin<int>> UserLogins { get; set; }
     DbSet<IdentityUserToken<int>> UserTokens { get; set; }
-    DbSet<Role> Roles { get; set; }
+    DbSet<Domain.Entities.Role> Roles { get; set; }
     DbSet<RoleClaim> RoleClaims { get; set; }
     DbSet<UserRole> UserRoles { get; set; }
 

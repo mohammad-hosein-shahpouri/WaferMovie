@@ -1,10 +1,8 @@
-﻿using StackExchange.Redis;
+﻿namespace WaferMovie.Application.Series.Queries.FindSerieById;
 
-namespace WaferMovie.Application.Series.Queries.FindSerieById;
+public record FindSerieByIdQuery(int Id) : IRequest<CrudResult<FindSerieByIdQueryDto>>;
 
-public record FindSerieByIdQuery(int Id) : IRequest<CrudResult<Serie>>;
-
-public class FindSerieByIdQueryHandler : IRequestHandler<FindSerieByIdQuery, CrudResult<Serie>>
+public class FindSerieByIdQueryHandler : IRequestHandler<FindSerieByIdQuery, CrudResult<FindSerieByIdQueryDto>>
 {
     private readonly IApplicationDbContext dbContext;
     private readonly ILocalizationService localization;
@@ -17,20 +15,21 @@ public class FindSerieByIdQueryHandler : IRequestHandler<FindSerieByIdQuery, Cru
         this.cacheDb = cacheDb;
     }
 
-    public async Task<CrudResult<Serie>> Handle(FindSerieByIdQuery request, CancellationToken cancellationToken)
+    public async Task<CrudResult<FindSerieByIdQueryDto>> Handle(FindSerieByIdQuery request, CancellationToken cancellationToken)
     {
         var cacheKey = $"WaferMovie:Series:{request.Id}";
         var cacheResult = await cacheDb.StringGetAsync(cacheKey);
         if (!cacheResult.IsNullOrEmpty)
-            return new CrudResult<Serie>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<Serie>(cacheResult!)!);
+            return new CrudResult<FindSerieByIdQueryDto>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<FindSerieByIdQueryDto>(cacheResult!)!);
 
-        var serie = await dbContext.Series.FirstOrDefaultAsync(f => f.Id == request.Id, cancellationToken);
+        var serie = await dbContext.Series.ProjectToType<FindSerieByIdQueryDto>()
+            .FirstOrDefaultAsync(f => f.Id == request.Id, cancellationToken);
         if (serie == null)
-            return new CrudResult<Serie>(CrudStatus.NotFound, string.Format(localization.FromValidationResources("No {0} found with this {1}"), localization.FromPropertyResources("serie"), localization.FromPropertyResources(nameof(request.Id))));
+            return new CrudResult<FindSerieByIdQueryDto>(CrudStatus.NotFound, localization.FromValidationResources("No {0} found with this {1}", localization.FromPropertyResources("serie"), localization.FromPropertyResources(nameof(request.Id))));
 
         var cacheValue = JsonConvert.SerializeObject(serie);
         await cacheDb.StringSetAsync(cacheKey, cacheValue, TimeSpan.FromDays(1));
 
-        return new CrudResult<Serie>(CrudStatus.Succeeded, serie);
+        return new CrudResult<FindSerieByIdQueryDto>(CrudStatus.Succeeded, serie);
     }
 }

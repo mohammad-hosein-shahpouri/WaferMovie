@@ -24,7 +24,7 @@ public static class ConfigureServices
         return services;
     }
 
-    private static IServiceCollection AddMapster(this IServiceCollection services)
+    public static IServiceCollection AddMapster(this IServiceCollection services)
     {
         var config = TypeAdapterConfig.GlobalSettings;
         IList<IRegister> registers = config.Scan(Assembly.GetExecutingAssembly());

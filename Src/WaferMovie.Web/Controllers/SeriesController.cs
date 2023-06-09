@@ -24,7 +24,7 @@ public class SeriesController : ControllerBase
         => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
 
     [HttpGet("FindById/{id}")]
-    public async Task<CrudResult<Serie>> FindById(int id, CancellationToken cancellationToken)
+    public async Task<CrudResult<FindSerieByIdQueryDto>> FindById(int id, CancellationToken cancellationToken)
         => await mediator.Send(new FindSerieByIdQuery(id), cancellationToken);
 
     #endregion Query
@@ -32,7 +32,7 @@ public class SeriesController : ControllerBase
     #region Command
 
     [HttpPost("Create")]
-    public async Task<CrudResult<Serie>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
+    public async Task<CrudResult<int>> Create(CreateSerieCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
     #endregion Command

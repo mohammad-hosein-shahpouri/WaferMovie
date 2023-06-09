@@ -3,13 +3,13 @@
 namespace WaferMovie.Application.Series.Commands.CreateSerie;
 
 [ValidateNever]
-public record CreateSerieCommand : SerieCoreModel, IRequest<CrudResult<Serie>>
+public record CreateSerieCommand : SerieCoreModel, IRequest<CrudResult<int>>
 {
     public string IMDB { get; set; } = default!;
     public SerieAgeRestriction AgeRestriction { get; set; }
 }
 
-public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, CrudResult<Serie>>
+public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, CrudResult<int>>
 {
     private readonly IApplicationDbContext dbContext;
     private readonly IDatabase cacheDb;
@@ -20,7 +20,7 @@ public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, Cru
         this.cacheDb = cacheDb;
     }
 
-    public async Task<CrudResult<Serie>> Handle(CreateSerieCommand request, CancellationToken cancellationToken)
+    public async Task<CrudResult<int>> Handle(CreateSerieCommand request, CancellationToken cancellationToken)
     {
         var entity = request.Adapt<Serie>();
 
@@ -29,6 +29,6 @@ public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, Cru
 
         await cacheDb.KeyDeleteAsync("WaferMovie:Series:All");
 
-        return new CrudResult<Serie>(CrudStatus.Succeeded, entity);
+        return new CrudResult<int>(CrudStatus.Succeeded, entity.Id);
     }
 }

@@ -28,7 +28,7 @@ public class CreateMovieCommandTest
         };
 
         var result = await mediator.Send(command);
-        var newMovie = await dbContext.Movies.FirstOrDefaultAsync(f => f.Id == result.Data.Id);
+        var newMovie = await dbContext.Movies.FirstOrDefaultAsync(f => f.Id == result.Data);
 
         result.Succeeded.ShouldBeTrue();
         result.Status.ShouldBe(CrudStatus.Succeeded);

@@ -11,6 +11,7 @@ public class UserRole : IdentityUserRole<int>, IEntityTypeConfiguration<UserRole
     public void Configure(EntityTypeBuilder<UserRole> builder)
     {
         builder.ToTable("UserRoles");
+        builder.HasKey(pk => new { pk.RoleId, pk.UserId });
 
         builder.HasOne(o => o.Role)
             .WithMany(m => m.Users)

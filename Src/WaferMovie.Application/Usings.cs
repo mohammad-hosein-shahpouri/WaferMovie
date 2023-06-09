@@ -4,6 +4,7 @@ global using MediatR;
 global using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 global using Microsoft.EntityFrameworkCore;
 global using Newtonsoft.Json;
+global using StackExchange.Redis;
 global using WaferMovie.Application.Common.CoreModels;
 global using WaferMovie.Application.Common.CoreModels.Validators;
 global using WaferMovie.Application.Common.Interfaces;
