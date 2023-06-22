@@ -126,6 +126,9 @@
   <data name="Male" xml:space="preserve">
     <value>آقا</value>
   </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>آیتم مورد نظر یافت نشد</value>
+  </data>
   <data name="PreferNotToSay" xml:space="preserve">
     <value>ترجیح میدهم نگویم</value>
   </data>

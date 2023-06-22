@@ -21,7 +21,7 @@ public class DatabaseHealthCheck : IHealthCheck
             var connectionString = configuration.GetConnectionString("postgres");
             using (var connection = new NpgsqlConnection(connectionString))
             {
-                if (connection.State != ConnectionState.Open) await connection.OpenAsync();
+                if (connection.State != ConnectionState.Open) await connection.OpenAsync(cancellationToken);
 
                 if (connection.State == ConnectionState.Open)
                 {

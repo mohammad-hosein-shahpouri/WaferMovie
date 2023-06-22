@@ -47,5 +47,8 @@ public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
 
         builder.Property(p => p.SecurityStamp)
             .HasMaxLength(255);
+
+        builder.Property(p => p.BirthDate)
+            .HasColumnType("date");
     }
 }

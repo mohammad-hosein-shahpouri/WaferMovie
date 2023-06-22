@@ -1,8 +1,9 @@
 ﻿using WaferMovie.Application.Users.Commands.CreateUser;
+using WaferMovie.Application.Users.Commands.UpdateUser;
 
 namespace WaferMovie.Web.Controllers;
 
-[Route("api/v{version}/[controller]")]
+[Route("api/v{version}/[controller]/[action]")]
 [ApiController, ApiVersion("1.0")]
 public class UsersController : ControllerBase
 {
@@ -13,7 +14,15 @@ public class UsersController : ControllerBase
         this.mediator = mediator;
     }
 
-    [HttpPost("Create")]
-    public async Task<CrudResult<User>> Create(CreateUserCommand command, CancellationToken cancellationToken)
+    #region Commands
+
+    [HttpPost]
+    public async Task<CrudResult<User>> CreateUser(CreateUserCommand command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
+
+    [HttpPut]
+    public async Task<CrudResult<int>> UpdateUser(UpdateUserCommand command, CancellationToken cancellationToken)
+        => await mediator.Send(command, cancellationToken);
+
+    #endregion Commands
 }
