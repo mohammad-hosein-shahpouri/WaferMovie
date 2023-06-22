@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Failed" xml:space="preserve">
+    <value>عملیات با خطا مواجه شد</value>
+  </data>
   <data name="Female" xml:space="preserve">
     <value>خانم</value>
   </data>
@@ -125,5 +128,11 @@
   </data>
   <data name="PreferNotToSay" xml:space="preserve">
     <value>ترجیح میدهم نگویم</value>
+  </data>
+  <data name="Succeeded" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد</value>
+  </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>اطلاعات وارد شده نامعتبر است</value>
   </data>
 </root>

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using WaferMovie.Application.Common.Behaviors;
 
@@ -19,6 +18,7 @@ public static class ConfigureServices
     private static IServiceCollection AddPipelines(this IServiceCollection services)
     {
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>))
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(LocalizationPipelineBehavior<,>))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(HttpStatusCodePipelineBehavior<,>));
 
         return services;
