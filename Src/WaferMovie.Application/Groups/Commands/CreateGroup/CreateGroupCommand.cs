@@ -1,13 +1,6 @@
 ﻿namespace WaferMovie.Application.Groups.Commands.CreateGroup;
 
-public record CreateGroupCommand : IRequest<CrudResult>
-{
-    public string Name { get; set; } = default!;
-    public string Description { get; set; } = default!;
-    public string? ImageUrl { get; set; }
-    public string? ImageThumbnailUrl { get; set; }
-    public bool IsPublic { get; set; }
-}
+public record CreateGroupCommand : GroupCoreModel, IRequest<CrudResult>;
 
 public class CreateGroupCommandHandler : IRequestHandler<CreateGroupCommand, CrudResult>
 {

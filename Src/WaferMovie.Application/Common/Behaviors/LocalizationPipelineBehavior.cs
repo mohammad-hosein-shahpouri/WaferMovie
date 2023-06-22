@@ -1,8 +1,8 @@
 ﻿namespace WaferMovie.Application.Common.Behaviors;
 
 public class LocalizationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-where TRequest : IRequest<TResponse>
-where TResponse : CrudResult
+    where TRequest : IRequest<TResponse>
+    where TResponse : CrudResult
 {
     private readonly ILocalizationService localizationService;
 

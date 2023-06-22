@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using StackExchange.Redis;
+﻿using WaferMovie.Application.Common;
 
 namespace WaferMovie.Application.Accounts.Queries.GetCurrentUser;
 
@@ -8,26 +7,25 @@ public record GetCurrentUserQuery : IRequest<CrudResult<GetCurrentUserQueryDto>>
 public class GetCurrentUserQueryHandler : IRequestHandler<GetCurrentUserQuery, CrudResult<GetCurrentUserQueryDto>>
 {
     private readonly IApplicationDbContext dbContext;
-    private readonly IHttpContextAccessor httpContext;
+    private readonly ICurrentUserService currentUserService;
     private readonly IDatabase cacheDb;
 
-    public GetCurrentUserQueryHandler(IApplicationDbContext dbContext, IHttpContextAccessor httpContext,
+    public GetCurrentUserQueryHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService,
         IDatabase cacheDb)
     {
         this.dbContext = dbContext;
-        this.httpContext = httpContext;
+        this.currentUserService = currentUserService;
         this.cacheDb = cacheDb;
     }
 
     public async Task<CrudResult<GetCurrentUserQueryDto>> Handle(GetCurrentUserQuery request, CancellationToken cancellationToken)
     {
-        var username = httpContext.HttpContext?.User.Identity?.Name?.ToUpper();
-        var cacheKey = $"WaferMovie:Users:{username}";
+        var cacheKey = CacheKeys.GetUsersKey(currentUserService.Id);
         var cacheResult = await cacheDb.StringGetAsync(cacheKey);
         if (!cacheResult.IsNullOrEmpty)
             return new CrudResult<GetCurrentUserQueryDto>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<GetCurrentUserQueryDto>(cacheResult!)!);
 
-        var user = await dbContext.Users.Where(w => w.NormalizedUserName == username)
+        var user = await dbContext.Users.Where(w => w.Id == currentUserService.Id)
             .ProjectToType<GetCurrentUserQueryDto>().FirstOrDefaultAsync(cancellationToken);
         if (user == null)
             return new CrudResult<GetCurrentUserQueryDto>(CrudStatus.NotFound);

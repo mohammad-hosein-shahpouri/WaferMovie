@@ -1,4 +1,6 @@
-﻿namespace WaferMovie.Application.Series.Queries.FindSerieById;
+﻿using WaferMovie.Application.Common;
+
+namespace WaferMovie.Application.Series.Queries.FindSerieById;
 
 public record FindSerieByIdQuery(int Id) : IRequest<CrudResult<FindSerieByIdQueryDto>>;
 
@@ -17,7 +19,7 @@ public class FindSerieByIdQueryHandler : IRequestHandler<FindSerieByIdQuery, Cru
 
     public async Task<CrudResult<FindSerieByIdQueryDto>> Handle(FindSerieByIdQuery request, CancellationToken cancellationToken)
     {
-        var cacheKey = $"WaferMovie:Series:{request.Id}";
+        var cacheKey = CacheKeys.GetSeriesKey(request.Id);
         var cacheResult = await cacheDb.StringGetAsync(cacheKey);
         if (!cacheResult.IsNullOrEmpty)
             return new CrudResult<FindSerieByIdQueryDto>(CrudStatus.Succeeded, JsonConvert.DeserializeObject<FindSerieByIdQueryDto>(cacheResult!)!);

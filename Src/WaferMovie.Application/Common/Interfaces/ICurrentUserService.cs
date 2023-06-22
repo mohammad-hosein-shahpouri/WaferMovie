@@ -3,5 +3,5 @@
 public interface ICurrentUserService
 {
     bool IsAuthenticated { get; }
-    int? Id { get; }
+    int Id { get; }
 }

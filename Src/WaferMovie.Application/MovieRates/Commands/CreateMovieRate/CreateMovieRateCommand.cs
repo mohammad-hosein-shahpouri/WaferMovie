@@ -19,7 +19,7 @@ public class CreateMovieRateCommandHandler : IRequestHandler<CreateMovieRateComm
         {
             MovieId = request.MovieId,
             Score = request.Score,
-            UserId = currentUserService.Id!.Value
+            UserId = currentUserService.Id
         };
 
         dbContext.MovieRates.Add(entity);

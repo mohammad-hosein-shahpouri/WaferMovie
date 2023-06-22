@@ -13,5 +13,5 @@ public class CurrentUserService : ICurrentUserService
     }
 
     public bool IsAuthenticated => httpContext.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
-    public int? Id => IsAuthenticated ? Convert.ToInt32(httpContext.HttpContext?.User.Claims.FirstOrDefault(f => f.Type == "UserId")?.Value) : null;
+    public int Id => IsAuthenticated ? Convert.ToInt32(httpContext.HttpContext?.User.Claims.FirstOrDefault(f => f.Type == "UserId")?.Value) : 0;
 }

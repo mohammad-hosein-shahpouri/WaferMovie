@@ -19,7 +19,7 @@ public class CreateSerieRateCommandHandler : IRequestHandler<CreateSerieRateComm
         {
             SerieId = request.SerieId,
             Score = request.Score,
-            UserId = currentUserService.Id!.Value
+            UserId = currentUserService.Id
         };
 
         dbContext.SerieRates.Add(entity);
