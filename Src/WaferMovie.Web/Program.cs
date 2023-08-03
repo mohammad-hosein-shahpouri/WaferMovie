@@ -1,6 +1,7 @@
 using AspNetCore.SpaServices.ViteDevelopmentServer;
 using Newtonsoft.Json;
 using WaferMovie.Application;
+using WaferMovie.Domain;
 using WaferMovie.Infrastructure;
 using WaferMovie.Infrastructure.HealthCheck;
 
@@ -18,8 +19,8 @@ builder.Services.AddControllers(c =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddApplication()
-    .AddInfrastructure(builder.Configuration);
+builder.Services.AddDomain(builder.Configuration)
+    .AddApplication().AddInfrastructure(builder.Configuration);
 
 builder.Services.AddApiVersioning(o =>
 {
@@ -29,9 +30,6 @@ builder.Services.AddApiVersioning(o =>
 });
 builder.Services
     .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
-
-builder.Services.AddHealthChecks()
-    .AddCheck<DatabaseHealthCheck>(nameof(DatabaseHealthCheck));
 
 var app = builder.Build();
 
