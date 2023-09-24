@@ -8,4 +8,5 @@ public record SerieCoreModel
     public int Length { get; set; }
     public bool IsFree { get; set; }
     public int FirstSeasonYear { get; set; }
+    public int? LastSeasonYear { get; set; }
 }

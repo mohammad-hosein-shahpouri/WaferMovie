@@ -35,7 +35,7 @@ public interface IApplicationDbContext : IDisposable
     #region Groups
 
     DbSet<Group> Groups { get; }
-    DbSet<MovieGroup> MovieGroup { get; }
+    DbSet<MovieGroup> MovieGroups { get; }
     DbSet<SerieGroup> SerieGroups { get; }
 
     #endregion Groups

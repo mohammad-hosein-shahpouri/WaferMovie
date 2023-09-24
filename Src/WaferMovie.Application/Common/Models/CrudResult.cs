@@ -2,10 +2,6 @@
 
 public class CrudResult
 {
-    public CrudResult()
-    {
-    }
-
     public CrudResult(CrudStatus status)
     {
         Status = status;
@@ -34,10 +30,6 @@ public class CrudResult
 
 public class CrudResult<TEntity> : CrudResult
 {
-    public CrudResult()
-    {
-    }
-
     public CrudResult(CrudStatus status) : base(status)
     {
     }

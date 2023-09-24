@@ -1,11 +1,20 @@
 ﻿namespace WaferMovie.Domain.Entities;
 
-public class MovieRate : IEntityTypeConfiguration<MovieRate>
+public class MovieRate : IBaseEntity, IBaseAuditableEntity, IEntityTypeConfiguration<MovieRate>
 {
     public int MovieId { get; set; }
     public int UserId { get; set; }
-
     public byte Score { get; set; }
+
+    #region Adit
+
+    public int CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+
+    public int? ModifiedBy { get; set; }
+    public DateTime? ModifiedOn { get; set; }
+
+    #endregion Adit
 
     public virtual Movie Movie { get; set; } = default!;
     public virtual User User { get; set; } = default!;

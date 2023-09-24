@@ -2,14 +2,25 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class User : IdentityUser<int>, IEntityTypeConfiguration<User>
+public class User : IdentityUser<int>, IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity, IEntityTypeConfiguration<User>
 {
     public string Name { get; set; } = default!;
-
     public Gender Gender { get; set; } = Gender.PreferNotToSay;
-
     public int AccountBalance { get; set; }
     public DateTime? BirthDate { get; set; }
+
+    #region Adit
+
+    public int CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+
+    public int? ModifiedBy { get; set; }
+    public DateTime? ModifiedOn { get; set; }
+
+    public DateTime? DeletedOn { get; set; }
+    public int? DeletedBy { get; set; }
+
+    #endregion Adit
 
     public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
     public virtual ICollection<UserClaim> Claims { get; set; } = new List<UserClaim>();

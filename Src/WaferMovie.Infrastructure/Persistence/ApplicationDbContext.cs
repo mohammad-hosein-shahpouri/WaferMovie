@@ -2,15 +2,19 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WaferMovie.Application.Common.Interfaces;
+using WaferMovie.Domain;
 using WaferMovie.Domain.Entities;
 
 namespace WaferMovie.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, IdentityUserLogin<int>, RoleClaim, IdentityUserToken<int>>, IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    private readonly ICurrentUserService currentUserService;
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        this.currentUserService = currentUserService;
     }
 
     #region Series
@@ -32,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
     #region Groups
 
     public virtual DbSet<Group> Groups => Set<Group>();
-    public virtual DbSet<MovieGroup> MovieGroup => Set<MovieGroup>();
+    public virtual DbSet<MovieGroup> MovieGroups => Set<MovieGroup>();
     public virtual DbSet<SerieGroup> SerieGroups => Set<SerieGroup>();
 
     #endregion Groups
@@ -46,18 +50,24 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
-        //foreach (var entry in ChangeTracker.Entries<BaseEntity>())
-        //{
-        //    switch (entry.State)
-        //    {
-        //        case EntityState.Added:
-        //            entry.Entity.CreatedDate = DateTime.Now;
-        //            break;
-        //        case EntityState.Modified:
-        //            entry.Entity.ModifiedDate = DateTime.Now;
-        //            break;
-        //    }
-        //}
+        foreach (var entry in ChangeTracker.Entries<IBaseEntity>().Where(w => w.State == EntityState.Added))
+        {
+            entry.Entity.CreatedOn = DateTime.UtcNow;
+            entry.Entity.CreatedBy = currentUserService.Id;
+        }
+
+        foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>().Where(w => w.State == EntityState.Modified))
+        {
+            entry.Entity.ModifiedOn = DateTime.UtcNow;
+            entry.Entity.ModifiedBy = currentUserService.Id;
+        }
+
+        foreach (var entry in ChangeTracker.Entries<IBaseSoftDeleteEntity>().Where(w => w.State == EntityState.Deleted))
+        {
+            entry.Entity.DeletedOn = DateTime.UtcNow;
+            entry.Entity.DeletedBy = currentUserService.Id;
+            entry.State = EntityState.Modified;
+        }
 
         return base.SaveChangesAsync(cancellationToken);
     }
@@ -74,5 +84,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
         modelBuilder.ApplyConfiguration(new UserClaim());
         modelBuilder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins");
         modelBuilder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            if (typeof(IBaseSoftDeleteEntity).IsAssignableFrom(entityType.ClrType))
+                entityType.AddSoftDeleteQueryFilter();
     }
 }

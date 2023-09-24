@@ -1,9 +1,16 @@
 ﻿namespace WaferMovie.Domain.Entities;
 
-public class MovieGroup : IEntityTypeConfiguration<MovieGroup>
+public class MovieGroup : IBaseEntity, IEntityTypeConfiguration<MovieGroup>
 {
     public int GroupId { get; set; }
     public int MovieId { get; set; }
+
+    #region Adit
+
+    public int CreatedBy { get; set; }
+    public DateTime CreatedOn { get; set; }
+
+    #endregion Adit
 
     public virtual Group Group { get; set; } = default!;
     public virtual Movie Movie { get; set; } = default!;
