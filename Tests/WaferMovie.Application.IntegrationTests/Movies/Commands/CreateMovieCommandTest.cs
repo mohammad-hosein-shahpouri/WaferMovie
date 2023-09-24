@@ -1,20 +1,15 @@
 ﻿using WaferMovie.Application.Movies.Commands.CreateMovie;
 
-namespace WaferMovie.Application.Test.Movies.Commands;
+namespace WaferMovie.Application.IntegrationTests.Movies.Commands;
 
-public class CreateMovieCommandTest
+public class CreateMovieCommandTest : TestFixture
 {
-    private readonly IApplicationDbContext dbContext = InMemoryDatabase.Create();
-    private readonly IMediator mediator;
-
-    public CreateMovieCommandTest()
-    {
-        mediator = Services.Configure(dbContext);
-    }
-
-    [Fact]
+    [Test]
     public async Task ShouldCreateMovie()
     {
+        using var dbContext = Resolve<IApplicationDbContext>();
+        var mediator = Resolve<IMediator>();
+
         var command = new CreateMovieCommand
         {
             Title = "Black Panther",
@@ -30,31 +25,33 @@ public class CreateMovieCommandTest
         var result = await mediator.Send(command);
         var newMovie = await dbContext.Movies.FirstOrDefaultAsync(f => f.Id == result.Data);
 
-        result.Succeeded.ShouldBeTrue();
-        result.Status.ShouldBe(CrudStatus.Succeeded);
+        result.Succeeded.Should().BeTrue();
+        result.Status.Should().Be(CrudStatus.Succeeded);
 
-        newMovie!.Description.ShouldBe(command.Description);
-        newMovie.IsFree.ShouldBeTrue();
-        newMovie.Length.ShouldBe(command.Length);
-        newMovie.OutYear.ShouldBe(command.OutYear);
-        newMovie.Title.ShouldBe(command.Title);
-        newMovie.Unavailable.ShouldBeFalse();
+        newMovie!.Description.Should().Be(command.Description);
+        newMovie.IsFree.Should().BeTrue();
+        newMovie.Length.Should().Be(command.Length);
+        newMovie.OutYear.Should().Be(command.OutYear);
+        newMovie.Title.Should().Be(command.Title);
+        newMovie.Unavailable.Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public async Task ShouldHaveValidationError()
     {
+        var mediator = Resolve<IMediator>();
         var command = new CreateMovieCommand();
 
         var result = await mediator.Send(command);
 
-        result.Status.ShouldBe(CrudStatus.ValidationError);
-        result.Messages.Count.ShouldBe(2);
+        result.Status.Should().Be(CrudStatus.ValidationError);
+        result.Messages.Count.Should().Be(2);
     }
 
-    [Fact]
+    [Test]
     public async Task ShouldRestrictDuplicateIMDB()
     {
+        var mediator = Resolve<IMediator>();
         var command = new CreateMovieCommand
         {
             Title = "No Time to Die",
@@ -68,7 +65,7 @@ public class CreateMovieCommandTest
         };
         var result = await mediator.Send(command);
 
-        result.Status.ShouldBe(CrudStatus.ValidationError);
-        result.Messages.Count.ShouldBe(1);
+        result.Status.Should().Be(CrudStatus.ValidationError);
+        result.Messages.Count.Should().Be(1);
     }
 }

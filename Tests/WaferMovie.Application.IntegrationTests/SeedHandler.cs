@@ -1,33 +1,15 @@
-﻿using Microsoft.Data.Sqlite;
-using WaferMovie.Domain.Entities;
-using WaferMovie.Infrastructure.Persistence;
+﻿namespace WaferMovie.Application.IntegrationTests;
 
-namespace WaferMovie.Application.Test;
-
-public static class InMemoryDatabase
+public static class SeedHandler
 {
-    public static IApplicationDbContext Create()
+    public static async Task SeedAsync(IApplicationDbContext dbContext)
     {
-        string connectionString = $"Data Source={Guid.NewGuid()};Mode=Memory;Cache=Shared"; // In memory database
-        var connection = new SqliteConnection(connectionString);
-        connection.Open();
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseSqlite(connection)
-            .Options;
-
-        var dbContext = new ApplicationDbContext(options);
-
-        dbContext.Database.EnsureDeleted();
-        dbContext.Database.EnsureCreated();
-
-        dbContext.SeedMovies()
-            .SeedSeries()
-            .SaveChanges();
-
-        return dbContext;
+        await dbContext.SeedMovies()
+              .SeedSeries()
+              .SaveChangesAsync(CancellationToken.None);
     }
 
-    public static ApplicationDbContext SeedMovies(this ApplicationDbContext dbContext)
+    private static IApplicationDbContext SeedMovies(this IApplicationDbContext dbContext)
     {
         dbContext.Movies.AddRange(new List<Movie> {
             new Movie {
@@ -75,7 +57,7 @@ public static class InMemoryDatabase
         return dbContext;
     }
 
-    public static ApplicationDbContext SeedSeries(this ApplicationDbContext dbContext)
+    private static IApplicationDbContext SeedSeries(this IApplicationDbContext dbContext)
     {
         dbContext.Series.AddRange(new List<Serie>
         {

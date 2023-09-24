@@ -1,21 +1,15 @@
-﻿using WaferMovie.Application.Movies.Commands.CreateMovie;
-using WaferMovie.Application.Series.Commands.CreateSerie;
+﻿using WaferMovie.Application.Series.Commands.CreateSerie;
 
-namespace WaferMovie.Application.Test.Series.Commands;
+namespace WaferMovie.Application.IntegrationTests.Series.Commands;
 
-public class CreateSerieCommandTest
+public class CreateSerieCommandTest : TestFixture
 {
-    private readonly IApplicationDbContext dbContext = InMemoryDatabase.Create();
-    private readonly IMediator mediator;
-
-    public CreateSerieCommandTest()
-    {
-        mediator = Services.Configure(dbContext);
-    }
-
-    [Fact]
+    [Test]
     public async Task ShouldCreateSerie()
     {
+        using var dbContext = Resolve<IApplicationDbContext>();
+        var mediator = Resolve<IMediator>();
+
         var command = new CreateSerieCommand
         {
             AgeRestriction = SerieAgeRestriction.TVMA,
@@ -31,20 +25,22 @@ public class CreateSerieCommandTest
         var result = await mediator.Send(command);
         var newSerie = await dbContext.Series.FirstOrDefaultAsync(f => f.Id == result.Data);
 
-        result.Succeeded.ShouldBeTrue();
-        result.Status.ShouldBe(CrudStatus.Succeeded);
+        result.Succeeded.Should().BeTrue();
+        result.Status.Should().Be(CrudStatus.Succeeded);
 
-        newSerie!.Description.ShouldBe(command.Description);
-        newSerie.IsFree.ShouldBeTrue();
-        newSerie.Length.ShouldBe(command.Length);
-        newSerie.FirstSeasonYear.ShouldBe(command.FirstSeasonYear);
-        newSerie.Title.ShouldBe(command.Title);
-        newSerie.Unavailable.ShouldBeFalse();
+        newSerie!.Description.Should().Be(command.Description);
+        newSerie.IsFree.Should().BeTrue();
+        newSerie.Length.Should().Be(command.Length);
+        newSerie.FirstSeasonYear.Should().Be(command.FirstSeasonYear);
+        newSerie.Title.Should().Be(command.Title);
+        newSerie.Unavailable.Should().BeFalse();
     }
 
-    [Fact]
+    [Test]
     public async Task ShouldRestrictDuplicateIMDB()
     {
+        var mediator = Resolve<IMediator>();
+
         var command = new CreateSerieCommand
         {
             Title = "How I Met Your Mother",
@@ -59,18 +55,19 @@ public class CreateSerieCommandTest
 
         var result = await mediator.Send(command);
 
-        result.Status.ShouldBe(CrudStatus.ValidationError);
-        result.Messages.Count.ShouldBe(1);
+        result.Status.Should().Be(CrudStatus.ValidationError);
+        result.Messages.Count.Should().Be(1);
     }
 
-    [Fact]
+    [Test]
     public async Task ShouldHaveValidationError()
     {
+        var mediator = Resolve<IMediator>();
         var command = new CreateSerieCommand();
 
         var result = await mediator.Send(command);
 
-        result.Status.ShouldBe(CrudStatus.ValidationError);
-        result.Messages.Count.ShouldBe(2);
+        result.Status.Should().Be(CrudStatus.ValidationError);
+        result.Messages.Count.Should().Be(2);
     }
 }

@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using WaferMovie.Application;
 using WaferMovie.Domain;
 using WaferMovie.Infrastructure;
-using WaferMovie.Infrastructure.HealthCheck;
 
 var builder = WebApplication.CreateBuilder(args);
 var isDevelopment = builder.Environment.IsDevelopment();
@@ -71,3 +70,6 @@ app.UseSpa(spa =>
 });
 
 app.Run();
+
+public partial class Program
+{ }

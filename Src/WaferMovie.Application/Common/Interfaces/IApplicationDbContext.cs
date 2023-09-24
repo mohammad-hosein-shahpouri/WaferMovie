@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace WaferMovie.Application.Common.Interfaces;
 
@@ -46,6 +47,10 @@ public interface IApplicationDbContext : IDisposable
     DbSet<SerieRate> SerieRates { get; }
 
     #endregion Rates
+
+    DatabaseFacade Database { get; }
+
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

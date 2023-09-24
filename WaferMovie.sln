@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{313239D7-1353-4380-8EC1-49D82CE2A913}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{313239D7-1353-4380-8EC1-49D82CE2A913}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{AE439B52-041E-4AAE-9D7A-801F6358614F}"
 EndProject
@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Web", "Src\WaferMovie.Web\WaferMovie.Web.csproj", "{4228182F-FEE4-449A-83AB-F6B31BD94F13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Application.Test", "Test\WaferMovie.Application.Test\WaferMovie.Application.Test.csproj", "{990AA45B-947A-4F70-845C-E067FAD6D940}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WaferMovie.Application.IntegrationTests", "Tests\WaferMovie.Application.IntegrationTests\WaferMovie.Application.IntegrationTests.csproj", "{D3EFF4B5-E272-4E53-BAF5-51D8DD441824}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,10 +50,10 @@ Global
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{990AA45B-947A-4F70-845C-E067FAD6D940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{990AA45B-947A-4F70-845C-E067FAD6D940}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{990AA45B-947A-4F70-845C-E067FAD6D940}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{990AA45B-947A-4F70-845C-E067FAD6D940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EFF4B5-E272-4E53-BAF5-51D8DD441824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EFF4B5-E272-4E53-BAF5-51D8DD441824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EFF4B5-E272-4E53-BAF5-51D8DD441824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EFF4B5-E272-4E53-BAF5-51D8DD441824}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,7 +63,7 @@ Global
 		{94FA0BC2-503C-4541-AB36-CBEB3DC4047B} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
 		{0F5A6EF1-B19D-4D44-BF48-5C1FAC85E918} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
 		{4228182F-FEE4-449A-83AB-F6B31BD94F13} = {AE439B52-041E-4AAE-9D7A-801F6358614F}
-		{990AA45B-947A-4F70-845C-E067FAD6D940} = {313239D7-1353-4380-8EC1-49D82CE2A913}
+		{D3EFF4B5-E272-4E53-BAF5-51D8DD441824} = {313239D7-1353-4380-8EC1-49D82CE2A913}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {37AA6C2E-80AD-4B12-86DA-544F3DE09FEE}
