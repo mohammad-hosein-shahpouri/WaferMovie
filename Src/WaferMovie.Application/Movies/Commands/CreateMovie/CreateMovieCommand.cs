@@ -6,7 +6,7 @@ namespace WaferMovie.Application.Movies.Commands.CreateMovie;
 public record CreateMovieCommand : MovieCoreModel, IRequest<CrudResult<int>>
 {
     public string IMDB { get; set; } = default!;
-    public MovieAgeRestriction AgeRestriction { get; set; }
+    public EnumMovieAgeRestriction AgeRestriction { get; set; }
 }
 
 public class CreateMovieCommandHandler : IRequestHandler<CreateMovieCommand, CrudResult<int>>

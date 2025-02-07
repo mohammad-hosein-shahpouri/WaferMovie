@@ -12,7 +12,7 @@ public class CreateSerieCommandTest : TestFixture
 
         var command = new CreateSerieCommand
         {
-            AgeRestriction = SerieAgeRestriction.TVMA,
+            AgeRestriction = EnumSerieAgeRestriction.TVMA,
             Description = "An unusual group of robbers attempt to carry out the most perfect robbery in Spanish history - stealing 2.4 billion euros from the Royal Mint of Spain.",
             FirstSeasonYear = 2017,
             IMDB = "tt6468322",
@@ -44,7 +44,7 @@ public class CreateSerieCommandTest : TestFixture
         var command = new CreateSerieCommand
         {
             Title = "How I Met Your Mother",
-            AgeRestriction = SerieAgeRestriction.TV14,
+            AgeRestriction = EnumSerieAgeRestriction.TV14,
             Description = "A father recounts to his children - through a series of flashbacks - the journey he and his four best friends took leading up to him meeting their mother.",
             IMDB = "tt0460649",
             IsFree = false,

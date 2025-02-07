@@ -15,7 +15,7 @@ public class Serie : IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity, I
     public int FirstSeasonYear { get; set; }
 
     public int? LastSeasonYear { get; set; }
-    public SerieAgeRestriction AgeRestriction { get; set; }
+    public EnumSerieAgeRestriction AgeRestriction { get; set; }
     public DateTime? LastEpisodeDate { get; set; } = null;
 
     #region Adit

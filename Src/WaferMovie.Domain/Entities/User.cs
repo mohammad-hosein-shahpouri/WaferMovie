@@ -5,7 +5,7 @@ namespace WaferMovie.Domain.Entities;
 public class User : IdentityUser<int>, IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity, IEntityTypeConfiguration<User>
 {
     public string Name { get; set; } = default!;
-    public Gender Gender { get; set; } = Gender.PreferNotToSay;
+    public EnumGender Gender { get; set; } = EnumGender.PreferNotToSay;
     public int AccountBalance { get; set; }
     public DateTime? BirthDate { get; set; }
 
@@ -35,7 +35,7 @@ public class User : IdentityUser<int>, IBaseEntity, IBaseAuditableEntity, IBaseS
             .HasMaxLength(63);
 
         builder.Property(p => p.Gender)
-            .HasDefaultValue(Gender.PreferNotToSay);
+            .HasDefaultValue(EnumGender.PreferNotToSay);
 
         builder.Property(p => p.Email)
             .HasMaxLength(127);

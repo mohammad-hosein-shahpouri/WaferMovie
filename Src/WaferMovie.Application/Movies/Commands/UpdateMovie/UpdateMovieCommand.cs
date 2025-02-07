@@ -3,7 +3,7 @@
 public record UpdateMovieCommand : MovieCoreModel, IRequest<CrudResult<int>>
 {
     public int Id { get; set; }
-    public MovieAgeRestriction AgeRestriction { get; set; }
+    public EnumMovieAgeRestriction AgeRestriction { get; set; }
 }
 
 public class UpdateMovieCommandHandler : IRequestHandler<UpdateMovieCommand, CrudResult<int>>

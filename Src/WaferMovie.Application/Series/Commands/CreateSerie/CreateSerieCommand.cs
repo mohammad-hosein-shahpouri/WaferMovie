@@ -1,12 +1,10 @@
-﻿using StackExchange.Redis;
-
-namespace WaferMovie.Application.Series.Commands.CreateSerie;
+﻿namespace WaferMovie.Application.Series.Commands.CreateSerie;
 
 [ValidateNever]
 public record CreateSerieCommand : SerieCoreModel, IRequest<CrudResult<int>>
 {
     public string IMDB { get; set; } = default!;
-    public SerieAgeRestriction AgeRestriction { get; set; }
+    public EnumSerieAgeRestriction AgeRestriction { get; set; }
 }
 
 public class CreateSerieCommandHandler : IRequestHandler<CreateSerieCommand, CrudResult<int>>

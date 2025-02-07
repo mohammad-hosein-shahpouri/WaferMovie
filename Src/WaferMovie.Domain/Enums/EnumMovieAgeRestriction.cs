@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Domain.Enums;
 
-public enum MovieAgeRestriction : byte
+public enum EnumMovieAgeRestriction : byte
 {
     [Display(Name = "G")] G = 0,
     [Display(Name = "PG")] PG = 1,

@@ -14,7 +14,7 @@ public static class SeedHandler
         dbContext.Movies.AddRange(new List<Movie> {
             new Movie {
                 Title = "The Batman",
-                AgeRestriction = MovieAgeRestriction.PG13,
+                AgeRestriction = EnumMovieAgeRestriction.PG13,
                 Description = "When a sadistic serial killer begins murdering key political figures in Gotham, Batman is forced to investigate the city's hidden corruption and question his family's involvement.",
                 IMDB = "tt1877830",
                 IsFree = true,
@@ -24,7 +24,7 @@ public static class SeedHandler
             },
             new Movie {
                 Title = "No Time to Die",
-                AgeRestriction = MovieAgeRestriction.PG13,
+                AgeRestriction = EnumMovieAgeRestriction.PG13,
                 Description = "James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology.",
                 IMDB = "tt2382320",
                 IsFree = false,
@@ -34,7 +34,7 @@ public static class SeedHandler
             },
             new Movie {
                 Title = "Aquaman",
-                AgeRestriction = MovieAgeRestriction.PG13,
+                AgeRestriction = EnumMovieAgeRestriction.PG13,
                 Description = "Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.",
                 IMDB = "tt1477834",
                 IsFree = false,
@@ -44,7 +44,7 @@ public static class SeedHandler
             },
             new Movie {
                 Title = "Hitman's Wife's Bodyguard",
-                AgeRestriction = MovieAgeRestriction.R,
+                AgeRestriction = EnumMovieAgeRestriction.R,
                 Description = "The bodyguard, Michael Bryce, continues his friendship with assassin, Darius Kincaid, as they try to save Darius' wife Sonia.",
                 IMDB = "tt8385148",
                 IsFree = true,
@@ -63,7 +63,7 @@ public static class SeedHandler
         {
             new Serie {
                 Title="Lucifer",
-                AgeRestriction = SerieAgeRestriction.TV14,
+                AgeRestriction = EnumSerieAgeRestriction.TV14,
                 Description = "Lucifer Morningstar has decided he's had enough of being the dutiful servant in Hell and decides to spend some time on Earth to better understand humanity. He settles in Los Angeles - the City of Angels.",
                 IMDB = "tt4052886",
                 IsFree = true,
@@ -75,7 +75,7 @@ public static class SeedHandler
             },
             new Serie {
                 Title="Gravity Falls",
-                AgeRestriction = SerieAgeRestriction.TVY7,
+                AgeRestriction = EnumSerieAgeRestriction.TVY7,
                 Description = "Twin siblings Dipper and Mabel Pines spend the summer at their great-uncle's tourist trap in the enigmatic Gravity Falls, Oregon.",
                 IMDB = "tt1865718",
                 IsFree = false,
@@ -87,7 +87,7 @@ public static class SeedHandler
             },
             new Serie {
                 Title="Obi-Wan Kenobi",
-                AgeRestriction = SerieAgeRestriction.TV14,
+                AgeRestriction = EnumSerieAgeRestriction.TV14,
                 Description = "Jedi Master Obi-Wan Kenobi has to save young Leia after she is kidnapped, all the while being pursued by Imperial Inquisitors and his former Padawan, now known as Darth Vader.",
                 IMDB = "tt8466564",
                 IsFree = true,
@@ -99,7 +99,7 @@ public static class SeedHandler
             },
             new Serie {
                 Title="How I Met Your Mother",
-                AgeRestriction = SerieAgeRestriction.TV14,
+                AgeRestriction = EnumSerieAgeRestriction.TV14,
                 Description = "A father recounts to his children - through a series of flashbacks - the journey he and his four best friends took leading up to him meeting their mother.",
                 IMDB = "tt0460649",
                 IsFree = false,

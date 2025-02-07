@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Domain.Enums;
 
-public enum Gender : byte
+public enum EnumGender : byte
 {
     Male = 0,
     Female = 1,

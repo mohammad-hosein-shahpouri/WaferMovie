@@ -1,6 +1,6 @@
 ﻿namespace WaferMovie.Domain.Enums;
 
-public enum SerieAgeRestriction : byte
+public enum EnumSerieAgeRestriction : byte
 {
     [Display(Name = "TV-Y")] TVY = 0,
     [Display(Name = "TV-Y7")] TVY7 = 1,

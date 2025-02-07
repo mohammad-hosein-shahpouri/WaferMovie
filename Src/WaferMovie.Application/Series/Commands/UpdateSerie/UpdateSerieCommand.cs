@@ -3,7 +3,7 @@
 public record UpdateSerieCommand : SerieCoreModel, IRequest<CrudResult<int>>
 {
     public int Id { get; set; }
-    public SerieAgeRestriction AgeRestriction { get; set; }
+    public EnumSerieAgeRestriction AgeRestriction { get; set; }
 }
 
 public class UpdateSerieCommandHandler : IRequestHandler<UpdateSerieCommand, CrudResult<int>>
