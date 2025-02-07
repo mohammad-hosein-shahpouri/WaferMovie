@@ -13,7 +13,7 @@ public class CreateMovieCommandTest : TestFixture
         var command = new CreateMovieCommand
         {
             Title = "Black Panther",
-            AgeRestriction = MovieAgeRestriction.PG13,
+            AgeRestriction = EnumMovieAgeRestriction.PG13,
             Description = "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future and must confront a challenger from his country's past.",
             IsFree = true,
             IMDB = "tt1825683",
@@ -55,7 +55,7 @@ public class CreateMovieCommandTest : TestFixture
         var command = new CreateMovieCommand
         {
             Title = "No Time to Die",
-            AgeRestriction = MovieAgeRestriction.PG13,
+            AgeRestriction = EnumMovieAgeRestriction.PG13,
             Description = "James Bond has left active service. His peace is short-lived when Felix Leiter, an old friend from the CIA, turns up asking for help, leading Bond onto the trail of a mysterious villain armed with dangerous new technology.",
             IMDB = "tt2382320",
             IsFree = false,

@@ -17,15 +17,12 @@ public class TestFixture
         using var dbContext = Resolve<IApplicationDbContext>();
 
         await dbContext.Database.OpenConnectionAsync();
-        dbContext.Database.EnsureDeleted();
-        dbContext.Database.EnsureCreated();
-
-        //while (!(await dbContext.Database.EnsureCreatedAsync()))
-        //    await dbContext.Database.EnsureDeletedAsync();
+        while (!(await dbContext.Database.EnsureCreatedAsync()))
+            await dbContext.Database.EnsureDeletedAsync();
         // dispose the factory to release the db connection
         //dbContext.Database.ens
 
-        // await SeedHandler.SeedAsync(dbContext);
+        await SeedHandler.SeedAsync(dbContext);
         RunInTesting();
     }
 

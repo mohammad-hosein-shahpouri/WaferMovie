@@ -1,4 +1,3 @@
-using AspNetCore.SpaServices.ViteDevelopmentServer;
 using Newtonsoft.Json;
 using WaferMovie.Application;
 using WaferMovie.Domain;
@@ -27,8 +26,6 @@ builder.Services.AddApiVersioning(o =>
     o.DefaultApiVersion = new ApiVersion(1, 0);
     o.ReportApiVersions = true;
 });
-builder.Services
-    .AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 
 var app = builder.Build();
 
@@ -51,7 +48,7 @@ if (isDevelopment)
 }
 app.UseRouting();
 app.UseHttpsRedirection();
-app.UseSpaStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -60,14 +57,6 @@ app.UseEndpoints(endpoints => endpoints.MapControllers());
 #pragma warning restore ASP0014 // Suggest using top level route registrations
 
 app.MapHealthChecks("/HealthCheck");
-
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = "ClientApp";
-    spa.Options.DevServerPort = 4173;
-
-    if (isDevelopment) spa.UseViteDevelopmentServer("dev");
-});
 
 app.Run();
 

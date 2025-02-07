@@ -1,7 +1,7 @@
 services:
   wafer-movie-api:
     container_name: wafer-movie-api
-    image: ghcr.io/mohammad-hosein-shahpouri/wafer-movie-api:${IMAGE_TAG}
+    image: ghcr.io/mohammad-hosein-shahpouri/wafer-movie-api:v${IMAGE_TAG}
     stdin_open: true
     tty: true
     build:

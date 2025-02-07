@@ -8,7 +8,7 @@ public class Episode : IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity,
     public int EpisodeNumber { get; set; } = 1;
     public bool IsLastEpisode { get; set; } = false;
     public virtual Season Season { get; set; } = default!;
-    public virtual ICollection<SerieDownloadLink> DownloadLinks { get; set; } = new List<SerieDownloadLink>();
+    public virtual ICollection<SerieDownloadLink> DownloadLinks { get; set; } = [];
 
     #region Adit
 
