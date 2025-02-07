@@ -47,3 +47,6 @@ jobs:
 
       - name: Build Docker images using Docker Compose
         run: docker compose build
+
+      - name: Push Docker images to GitHub container registry
+        run: docker compose push wafer-movie-api
