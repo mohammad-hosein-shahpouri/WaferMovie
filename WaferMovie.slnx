@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="compose.yml" />
+    <File Path="Dockerfile" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Src/">
+    <Project Path="Src/WaferMovie.Application/WaferMovie.Application.csproj" />
+    <Project Path="Src/WaferMovie.Domain/WaferMovie.Domain.csproj" />
+    <Project Path="Src/WaferMovie.Infrastructure/WaferMovie.Infrastructure.csproj" />
+    <Project Path="Src/WaferMovie.Web/WaferMovie.Web.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/WaferMovie.Application.IntegrationTests/WaferMovie.Application.IntegrationTests.csproj" />
+  </Folder>
+</Solution>
