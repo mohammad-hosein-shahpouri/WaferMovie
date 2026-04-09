@@ -2,7 +2,7 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class Role : IdentityRole<int>, IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity, IEntityTypeConfiguration<Role>
+public class Role : IdentityRole<Guid>, IEntityTypeConfiguration<Role>
 {
     public Role()
     {
@@ -19,21 +19,8 @@ public class Role : IdentityRole<int>, IBaseEntity, IBaseAuditableEntity, IBaseS
 
     public string Description { get; set; } = default!;
 
-    #region Adit
-
-    public int CreatedBy { get; set; }
-    public DateTime CreatedOn { get; set; }
-
-    public int? ModifiedBy { get; set; }
-    public DateTime? ModifiedOn { get; set; }
-
-    public DateTime? DeletedOn { get; set; }
-    public int? DeletedBy { get; set; }
-
-    #endregion Adit
-
-    public virtual IEnumerable<UserRole> Users { get; set; } = new List<UserRole>();
-    public virtual IEnumerable<RoleClaim> Claims { get; set; } = new List<RoleClaim>();
+    public virtual IEnumerable<UserRole> Users { get; set; } = [];
+    public virtual IEnumerable<RoleClaim> Claims { get; set; } = [];
 
     public void Configure(EntityTypeBuilder<Role> builder)
     {

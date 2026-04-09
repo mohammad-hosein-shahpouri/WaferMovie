@@ -1,16 +1,9 @@
 ﻿namespace WaferMovie.Domain.Entities;
 
-public class SerieGroup : IBaseEntity, IEntityTypeConfiguration<SerieGroup>
+public class SerieGroup : BaseEntity, IEntityTypeConfiguration<SerieGroup>
 {
-    public int GroupId { get; set; }
-    public int SerieId { get; set; }
-
-    #region Adit
-
-    public int CreatedBy { get; set; }
-    public DateTime CreatedOn { get; set; }
-
-    #endregion Adit
+    public Guid GroupId { get; set; }
+    public Guid SerieId { get; set; }
 
     public virtual Group Group { get; set; } = default!;
     public virtual Serie Serie { get; set; } = default!;

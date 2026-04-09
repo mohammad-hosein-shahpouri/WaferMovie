@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using WaferMovie.Application.Common.Interfaces;
 using WaferMovie.Domain.Entities;
+using WaferMovie.Domain.Interfaces;
 using WaferMovie.Infrastructure.HealthCheck;
 using WaferMovie.Infrastructure.Persistence;
 using WaferMovie.Infrastructure.Services;

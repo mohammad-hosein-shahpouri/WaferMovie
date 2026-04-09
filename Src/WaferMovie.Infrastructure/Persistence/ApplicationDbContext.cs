@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WaferMovie.Application.Common.Interfaces;
-using WaferMovie.Domain;
+using Microsoft.EntityFrameworkCore.Metadata;
 using WaferMovie.Domain.Entities;
+using WaferMovie.Domain.Interfaces;
+using WaferMovie.Infrastructure.Persistence.Generators;
 
 namespace WaferMovie.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim, UserRole, IdentityUserLogin<int>, RoleClaim, IdentityUserToken<int>>, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, IdentityUserLogin<Guid>, RoleClaim, IdentityUserToken<Guid>>, IApplicationDbContext
 {
     private readonly ICurrentUserService currentUserService;
 
@@ -50,24 +51,24 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
     {
-        foreach (var entry in ChangeTracker.Entries<IBaseEntity>().Where(w => w.State == EntityState.Added))
-        {
-            entry.Entity.CreatedOn = DateTime.UtcNow;
-            entry.Entity.CreatedBy = currentUserService.Id;
-        }
+        //foreach (var entry in ChangeTracker.Entries<IBaseEntity>().Where(w => w.State == EntityState.Added))
+        //{
+        //    entry.Entity.CreatedOn = DateTime.UtcNow;
+        //    entry.Entity.CreatedBy = currentUserService.Id;
+        //}
 
-        foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>().Where(w => w.State == EntityState.Modified))
-        {
-            entry.Entity.ModifiedOn = DateTime.UtcNow;
-            entry.Entity.ModifiedBy = currentUserService.Id;
-        }
+        //foreach (var entry in ChangeTracker.Entries<IBaseAuditableEntity>().Where(w => w.State == EntityState.Modified))
+        //{
+        //    entry.Entity.ModifiedOn = DateTime.UtcNow;
+        //    entry.Entity.ModifiedBy = currentUserService.Id;
+        //}
 
-        foreach (var entry in ChangeTracker.Entries<IBaseSoftDeleteEntity>().Where(w => w.State == EntityState.Deleted))
-        {
-            entry.Entity.DeletedOn = DateTime.UtcNow;
-            entry.Entity.DeletedBy = currentUserService.Id;
-            entry.State = EntityState.Modified;
-        }
+        //foreach (var entry in ChangeTracker.Entries<IBaseSoftDeleteEntity>().Where(w => w.State == EntityState.Deleted))
+        //{
+        //    entry.Entity.DeletedOn = DateTime.UtcNow;
+        //    entry.Entity.DeletedBy = currentUserService.Id;
+        //    entry.State = EntityState.Modified;
+        //}
 
         return base.SaveChangesAsync(cancellationToken);
     }
@@ -82,11 +83,21 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int, UserClaim
         modelBuilder.ApplyConfiguration(new UserRole());
         modelBuilder.ApplyConfiguration(new RoleClaim());
         modelBuilder.ApplyConfiguration(new UserClaim());
-        modelBuilder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins");
-        modelBuilder.Entity<IdentityUserToken<int>>().ToTable("UserTokens");
+        modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins");
+        modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens");
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            if (typeof(IBaseSoftDeleteEntity).IsAssignableFrom(entityType.ClrType))
-                entityType.AddSoftDeleteQueryFilter();
+        {
+            // Find all Guid properties (or specifically Primary Keys)
+            var properties = entityType.GetProperties()
+                .Where(p => p.ClrType == typeof(Guid));
+
+            foreach (var property in properties)
+            {
+                // Set the generator for Guid v7
+                property.SetValueGeneratorFactory((_, _) => new GuidV7Generator());
+                property.ValueGenerated = ValueGenerated.OnAdd;
+            }
+        }
     }
 }

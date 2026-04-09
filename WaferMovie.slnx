@@ -4,7 +4,6 @@
     <File Path=".editorconfig" />
     <File Path=".gitignore" />
     <File Path="compose.yml" />
-    <File Path="Dockerfile" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>

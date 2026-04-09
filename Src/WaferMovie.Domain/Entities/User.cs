@@ -2,30 +2,18 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class User : IdentityUser<int>, IBaseEntity, IBaseAuditableEntity, IBaseSoftDeleteEntity, IEntityTypeConfiguration<User>
+public class User : IdentityUser<Guid>, IEntityTypeConfiguration<User>
 {
     public string Name { get; set; } = default!;
     public EnumGender Gender { get; set; } = EnumGender.PreferNotToSay;
     public int AccountBalance { get; set; }
     public DateTime? BirthDate { get; set; }
 
-    #region Adit
 
-    public int CreatedBy { get; set; }
-    public DateTime CreatedOn { get; set; }
-
-    public int? ModifiedBy { get; set; }
-    public DateTime? ModifiedOn { get; set; }
-
-    public DateTime? DeletedOn { get; set; }
-    public int? DeletedBy { get; set; }
-
-    #endregion Adit
-
-    public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
-    public virtual ICollection<UserClaim> Claims { get; set; } = new List<UserClaim>();
-    public virtual ICollection<SerieRate> SerieRates { get; set; } = new List<SerieRate>();
-    public virtual ICollection<MovieRate> MovieRates { get; set; } = new List<MovieRate>();
+    public virtual ICollection<UserRole> Roles { get; set; } = [];
+    public virtual ICollection<UserClaim> Claims { get; set; } = [];
+    public virtual ICollection<SerieRate> SerieRates { get; set; } = [];
+    public virtual ICollection<MovieRate> MovieRates { get; set; } = [];
 
     public void Configure(EntityTypeBuilder<User> builder)
     {

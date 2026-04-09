@@ -1,21 +1,12 @@
 ﻿namespace WaferMovie.Domain.Entities;
 
-public class SerieRate : IBaseEntity, IBaseAuditableEntity, IEntityTypeConfiguration<SerieRate>
+public class SerieRate : BaseEntity, IEntityTypeConfiguration<SerieRate>
 {
-    public int SerieId { get; set; }
-    public int UserId { get; set; }
+    public Guid SerieId { get; set; }
+    public Guid UserId { get; set; }
 
     public byte Score { get; set; }
 
-    #region Adit
-
-    public int CreatedBy { get; set; }
-    public DateTime CreatedOn { get; set; }
-
-    public int? ModifiedBy { get; set; }
-    public DateTime? ModifiedOn { get; set; }
-
-    #endregion Adit
 
     public virtual Serie Serie { get; set; } = default!;
     public virtual User User { get; set; } = default!;

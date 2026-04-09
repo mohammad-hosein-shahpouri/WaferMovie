@@ -2,18 +2,8 @@
 
 namespace WaferMovie.Domain.Entities;
 
-public class RoleClaim : IdentityRoleClaim<int>, IBaseEntity, IBaseAuditableEntity, IEntityTypeConfiguration<RoleClaim>
+public class RoleClaim : IdentityRoleClaim<Guid>, IEntityTypeConfiguration<RoleClaim>
 {
-    #region Adit
-
-    public int CreatedBy { get; set; }
-    public DateTime CreatedOn { get; set; }
-
-    public int? ModifiedBy { get; set; }
-    public DateTime? ModifiedOn { get; set; }
-
-    #endregion Adit
-
     public virtual Role Role { get; set; } = default!;
 
     public void Configure(EntityTypeBuilder<RoleClaim> builder)

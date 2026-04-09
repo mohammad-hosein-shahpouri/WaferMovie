@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using WaferMovie.Application.Common.Interfaces;
+using WaferMovie.Domain.Interfaces;
 
 namespace WaferMovie.Infrastructure.Services;
 
@@ -13,5 +13,5 @@ public class CurrentUserService : ICurrentUserService
     }
 
     public bool IsAuthenticated => httpContext.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
-    public int Id => IsAuthenticated ? Convert.ToInt32(httpContext.HttpContext?.User.Claims.FirstOrDefault(f => f.Type == "UserId")?.Value) : 0;
+    public Guid Id => IsAuthenticated ? Guid.Parse(httpContext.HttpContext!.User.Claims.First(f => f.Type == "UserId").Value) : Guid.Empty;
 }
