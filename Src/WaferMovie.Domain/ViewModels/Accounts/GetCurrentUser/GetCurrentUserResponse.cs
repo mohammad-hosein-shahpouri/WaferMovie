@@ -1,14 +1,12 @@
-﻿namespace WaferMovie.Application.Accounts.Commands.Login;
+namespace WaferMovie.Domain.ViewModels.Accounts.GetCurrentUser;
 
-public class LoginCommandDto : IRegister
+public class GetCurrentUserResponse : IRegister
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = default!;
     public string UserName { get; set; } = default!;
     public string Email { get; set; } = default!;
     public int AccountBalance { get; set; }
-
-    public string Token { get; set; } = default!;
 
     public void Register(TypeAdapterConfig config)
     {

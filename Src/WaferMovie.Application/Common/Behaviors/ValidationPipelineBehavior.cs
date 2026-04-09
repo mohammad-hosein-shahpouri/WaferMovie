@@ -1,16 +1,9 @@
-﻿namespace WaferMovie.Application.Common.Behaviors;
+namespace WaferMovie.Application.Common.Behaviors;
 
-public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
-    where TResponse : CrudResult, new()
+    where TResponse : ApiResponse, new()
 {
-    private readonly IEnumerable<IValidator<TRequest>> validators;
-
-    public ValidationPipelineBehavior(IEnumerable<IValidator<TRequest>> validators)
-    {
-        this.validators = validators;
-    }
-
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (validators.Any())
@@ -22,13 +15,13 @@ public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior
                  .Distinct()
                  .ToList();
 
-            if (errors.Any()) return new TResponse
+            if (errors.Count != 0) return new TResponse
             {
-                Status = CrudStatus.ValidationError,
+                Status = EnumApiResponseStatus.InvalidData,
                 Messages = errors
             };
         }
 
-        return await next();
+        return await next(cancellationToken);
     }
 }
