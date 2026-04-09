@@ -6,45 +6,45 @@ services:
     tty: true
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: ./Src/WaferMovie.Web/Dockerfile
     environment:
       TZ: Asia/Tehran
       ASPNETCORE_URLS: http://+:8080;https://+:8443;
     restart: always
     hostname: wafer-movie
     networks:
-    - wafer-movie
+      - wafer-movie
     volumes:
-    - wafer-movie-api-logs:/app/logs
+      - wafer-movie-api-logs:/app/logs
     ports:
-    - 8080:8080
-    - 8443:8443
+      - 8080:8080
+      - 8443:8443
     depends_on:
-    - postgres
-    - redis
+      - postgres
+      - redis
 
   postgres:
     image: postgres:17-alpine
     restart: always
     networks:
-    - wafer-movie
+      - wafer-movie
     volumes:
-    - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: WaferMovie
       POSTGRES_PASSWORD: Qwer@#1234
       POSTGRES_DB: WaferMovie.App
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
-    - "5432:5432"
+      - "5432:5432"
 
   redis:
     image: redis:7.4-alpine
     restart: always
     networks:
-    - wafer-movie
+      - wafer-movie
     ports:
-    - "6379:6379"
+      - "6379:6379"
 
 networks:
   wafer-movie:

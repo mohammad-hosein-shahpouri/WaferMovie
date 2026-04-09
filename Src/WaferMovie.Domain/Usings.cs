@@ -1,4 +1,9 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿global using System.ComponentModel.DataAnnotations;
+global using FluentValidation;
+global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-global using System.ComponentModel.DataAnnotations;
+global using WaferMovie.Application.Common.Interfaces;
+global using WaferMovie.Domain.Constants;
+global using WaferMovie.Domain.Entities;
+global using WaferMovie.Domain.Entities.Abstractions;
 global using WaferMovie.Domain.Enums;

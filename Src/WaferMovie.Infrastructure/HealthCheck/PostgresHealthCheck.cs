@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Data;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Npgsql;
-using System.Data;
 
 namespace WaferMovie.Infrastructure.HealthCheck;
 
-public class DatabaseHealthCheck : IHealthCheck
+public class PostgresHealthCheck : IHealthCheck
 {
     private readonly IConfiguration configuration;
 
-    public DatabaseHealthCheck(IConfiguration configuration)
+    public PostgresHealthCheck(IConfiguration configuration)
     {
         this.configuration = configuration;
     }
@@ -26,15 +26,15 @@ public class DatabaseHealthCheck : IHealthCheck
                 if (connection.State == ConnectionState.Open)
                 {
                     await connection.CloseAsync();
-                    return HealthCheckResult.Healthy("The database is up and running.");
+                    return HealthCheckResult.Healthy("Postgres is up and running.");
                 }
             }
 
-            return new HealthCheckResult(context.Registration.FailureStatus, "The database is down.");
+            return new HealthCheckResult(context.Registration.FailureStatus, "Postgres is down.");
         }
         catch (Exception)
         {
-            return new HealthCheckResult(context.Registration.FailureStatus, "The database is down.");
+            return new HealthCheckResult(context.Registration.FailureStatus, "Postgres is down.");
         }
     }
 }

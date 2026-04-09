@@ -81,7 +81,7 @@ public static class ConfigureServices
         services.AddAuthorization();
 
         services.AddHealthChecks()
-            .AddCheck<DatabaseHealthCheck>(nameof(DatabaseHealthCheck))
+            .AddCheck<PostgresHealthCheck>(nameof(PostgresHealthCheck))
             .AddCheck<RedisHealthCheck>(nameof(RedisHealthCheck));
 
         return services;

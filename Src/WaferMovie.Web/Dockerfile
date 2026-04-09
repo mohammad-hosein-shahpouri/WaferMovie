@@ -1,11 +1,13 @@
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS base
+ARG DOTNET_VERSION=10.0
+
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-noble AS base
 LABEL "Author"="Mohammad Hosein Shahpouri"
 WORKDIR /app
-RUN apk add --no-cache nano curl tzdata
+#RUN apk add --no-cache nano curl tzdata
 EXPOSE 8080/TCP
 EXPOSE 8443/TCP
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-noble AS build
 WORKDIR /src
 COPY ./Src /src
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
