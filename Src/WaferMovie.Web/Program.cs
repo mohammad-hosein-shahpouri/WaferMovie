@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Reflection;
 using WaferMovie.Application;
 using WaferMovie.Domain;
 using WaferMovie.Infrastructure;
@@ -13,18 +13,27 @@ builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelS
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+
+    options.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddDomain(builder.Configuration)
     .AddApplication().AddInfrastructure(builder.Configuration);
-
 builder.Services.AddApiVersioning(o =>
 {
     o.AssumeDefaultVersionWhenUnspecified = true;
     o.DefaultApiVersion = new ApiVersion(1, 0);
     o.ReportApiVersions = true;
+    o.ApiVersionReader = new UrlSegmentApiVersionReader();
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV"; // v1, v1.0, etc.
+    options.SubstituteApiVersionInUrl = true;
 });
-
 var app = builder.Build();
 
 #region Localization

@@ -1,43 +1,27 @@
-﻿using WaferMovie.Application.Groups.Commands.CreateGroup;
-using WaferMovie.Application.Groups.Commands.DeleteGroup;
-using WaferMovie.Application.Groups.Commands.UpdateGroup;
-using WaferMovie.Application.Groups.Queries.FindGroupById;
+using WaferMovie.Domain.ViewModels.Groups.CreateGroup;
+using WaferMovie.Domain.ViewModels.Groups.DeleteGroup;
+using WaferMovie.Domain.ViewModels.Groups.GetGroupById;
+using WaferMovie.Domain.ViewModels.Groups.UpdateGroup;
 
 namespace WaferMovie.Web.Controllers;
 
-[Route("api/v{version}/[controller]/[action]")]
-[ApiController]
-[ApiVersion("1.0")]
-public class GroupsController : ControllerBase
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiController, ApiVersion("1.0")]
+public class GroupsController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator mediator;
-
-    public GroupsController(IMediator mediator)
-    {
-        this.mediator = mediator;
-    }
-
-    #region Queries
-
-    [HttpGet("{groupId}")]
-    public async Task<CrudResult<FindGroupByIdQueryDto>> FindById(int groupId, CancellationToken cancellationToken)
-        => await mediator.Send(new FindGroupByIdQuery(groupId), cancellationToken);
-
-    #endregion Queries
-
-    #region Commands
+    [HttpGet("{id}")]
+    public async Task<ApiResponse<GetGroupByIdResponse>> FindById(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new GetGroupByIdRequest { Id = id }, cancellationToken);
 
     [HttpPost]
-    public async Task<CrudResult> CreateGroup(CreateGroupCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponse<Guid>> CreateGroup(CreateGroupRequest command, CancellationToken cancellationToken)
         => await mediator.Send(command, cancellationToken);
 
-    [HttpPut]
-    public async Task<CrudResult> UpdateGroup(UpdateGroupCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    [HttpPut("{id}")]
+    public async Task<ApiResponse> UpdateGroup(Guid id, UpdateGroupRequest command, CancellationToken cancellationToken)
+        => await mediator.Send(command with { Id = id }, cancellationToken);
 
-    [HttpDelete("{groupId}")]
-    public async Task<CrudResult> DeleteGroup(int groupId, CancellationToken cancellationToken)
-        => await mediator.Send(new DeleteGroupCommand(groupId), cancellationToken);
-
-    #endregion Commands
+    [HttpDelete("{id}")]
+    public async Task<ApiResponse> DeleteGroup(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new DeleteGroupRequest { Id = id }, cancellationToken);
 }
