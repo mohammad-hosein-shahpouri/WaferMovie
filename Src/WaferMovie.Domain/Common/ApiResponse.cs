@@ -2,6 +2,11 @@ namespace WaferMovie.Domain.Common;
 
 public class ApiResponse
 {
+    public ApiResponse()
+    {
+
+    }
+
     public ApiResponse(EnumApiResponseStatus status)
     {
         Status = status;
@@ -30,6 +35,11 @@ public class ApiResponse
 
 public class ApiResponse<TEntity> : ApiResponse
 {
+    public ApiResponse()
+    {
+
+    }
+
     public ApiResponse(EnumApiResponseStatus status) : base(status)
     {
     }

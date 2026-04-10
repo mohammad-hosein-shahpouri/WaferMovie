@@ -1,5 +1,3 @@
-using WaferMovie.Domain.Common;
-
 namespace WaferMovie.Application.Common.Behaviors;
 
 public class LocalizationPipelineBehavior<TRequest, TResponse>(ILocalizationService localizationService) : IPipelineBehavior<TRequest, TResponse>

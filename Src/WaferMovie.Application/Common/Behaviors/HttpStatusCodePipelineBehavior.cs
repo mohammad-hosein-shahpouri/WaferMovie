@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using WaferMovie.Domain.Common;
 
 namespace WaferMovie.Application.Common.Behaviors;
 

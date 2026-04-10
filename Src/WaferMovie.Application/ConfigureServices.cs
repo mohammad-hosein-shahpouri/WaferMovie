@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using WaferMovie.Application.Common.Behaviors;
 
 namespace WaferMovie.Application;
@@ -8,19 +8,21 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddPipelines();
+        var domainAssembly = AppDomain.CurrentDomain.Load("WaferMovie.Domain");
+        var applicationAssembly = AppDomain.CurrentDomain.Load("WaferMovie.Application");
+
+
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterGenericHandlers = true;
+            cfg.RegisterServicesFromAssemblies(applicationAssembly);
+            cfg.AddOpenBehaviors([typeof(ValidationPipelineBehavior<,>),
+                typeof(LocalizationPipelineBehavior<,>),
+                typeof(HttpStatusCodePipelineBehavior<,>)
+                ]);
+        });
+        services.AddValidatorsFromAssemblies([domainAssembly]);
         services.AddMapster();
-        return services;
-    }
-
-    private static IServiceCollection AddPipelines(this IServiceCollection services)
-    {
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>))
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(LocalizationPipelineBehavior<,>))
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(HttpStatusCodePipelineBehavior<,>));
-
         return services;
     }
 

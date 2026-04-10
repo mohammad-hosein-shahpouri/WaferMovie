@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Http;
+
 namespace WaferMovie.Application.Common.Behaviors;
 
-public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
+public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators, IHttpContextAccessor httpContext) : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
     where TResponse : ApiResponse, new()
 {
+    private readonly HttpContext httpContext = httpContext.HttpContext!;
+
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         if (validators.Any())
@@ -15,11 +19,15 @@ public class ValidationPipelineBehavior<TRequest, TResponse>(IEnumerable<IValida
                  .Distinct()
                  .ToList();
 
-            if (errors.Count != 0) return new TResponse
+            if (errors.Count != 0)
             {
-                Status = EnumApiResponseStatus.InvalidData,
-                Messages = errors
-            };
+                httpContext.Response.StatusCode = 406;
+                return new TResponse
+                {
+                    Status = EnumApiResponseStatus.InvalidData,
+                    Messages = errors,
+                };
+            }
         }
 
         return await next(cancellationToken);

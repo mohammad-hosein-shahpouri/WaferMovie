@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
-using WaferMovie.Application.Common.Interfaces;
+using Microsoft.Extensions.Localization;
+using WaferMovie.Domain.Interfaces;
 using WaferMovie.Infrastructure.Localization.Resources;
 
 namespace WaferMovie.Infrastructure.Services;
