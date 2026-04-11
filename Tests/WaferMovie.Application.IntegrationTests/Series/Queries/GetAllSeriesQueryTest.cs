@@ -1,4 +1,5 @@
 ﻿using WaferMovie.Application.Series.Queries.GetAllSeries;
+using WaferMovie.Domain.Interfaces;
 
 namespace WaferMovie.Application.IntegrationTests.Series.Queries;
 

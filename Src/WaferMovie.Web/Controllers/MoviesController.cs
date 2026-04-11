@@ -1,9 +1,8 @@
-using WaferMovie.Application.MovieRates.Commands.CreateMovieRate;
-using WaferMovie.Application.Movies.Commands.CreateMovie;
-using WaferMovie.Application.Movies.Commands.DeleteMovie;
-using WaferMovie.Application.Movies.Commands.UpdateMovie;
-using WaferMovie.Application.Movies.Queries.FindMovieById;
-using WaferMovie.Application.Movies.Queries.GetAllMovies;
+using WaferMovie.Domain.ViewModels.Movies.CreateMovie;
+using WaferMovie.Domain.ViewModels.Movies.CreateMovieRate;
+using WaferMovie.Domain.ViewModels.Movies.DeleteMovie;
+using WaferMovie.Domain.ViewModels.Movies.GetMovieById;
+using WaferMovie.Domain.ViewModels.Movies.UpdateMovie;
 
 namespace WaferMovie.Web.Controllers;
 
@@ -11,28 +10,55 @@ namespace WaferMovie.Web.Controllers;
 [ApiController, ApiVersion("1.0")]
 public class MoviesController(IMediator mediator) : ControllerBase
 {
-    [HttpGet]
-    public async Task<ApiResponse<List<GetAllMoviesQueryDto>>> GetAll(CancellationToken cancellationToken)
-        => await mediator.Send(new GetAllMoviesQuery(), cancellationToken);
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ApiResponse<FindMovieByIdQueryDto>> FindById(Guid id, CancellationToken cancellationToken)
-        => await mediator.Send(new FindMovieByIdQuery(id), cancellationToken);
+    public async Task<ApiResponse<GetMovieByIdResponse>> GetMovieById(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new GetMovieByIdRequest { Id = id }, cancellationToken);
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<ApiResponse<Guid>> CreateMovie(CreateMovieCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    public async Task<ApiResponse<Guid>> CreateMovie(CreateMovieRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(request, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ApiResponse<Guid>> UpdateMovie(Guid id, UpdateMovieCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponse<Guid>> UpdateMovie(Guid id, UpdateMovieRequest command, CancellationToken cancellationToken)
         => await mediator.Send(command with { Id = id }, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ApiResponse<Guid>> DeleteMovie(Guid id, CancellationToken cancellationToken)
-        => await mediator.Send(new DeleteMovieCommand(id), cancellationToken);
+    public async Task<ApiResponse> DeleteMovie(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new DeleteMovieRequest { Id = id }, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost("{id}/Rate")]
-    public async Task<ApiResponse> CreateRate(Guid id, CreateMovieRateCommand command, CancellationToken cancellationToken)
+    public async Task<ApiResponse<Guid>> CreateRate(Guid id, CreateMovieRateRequest command, CancellationToken cancellationToken)
         => await mediator.Send(command with { MovieId = id }, cancellationToken);
 }

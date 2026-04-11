@@ -25,6 +25,6 @@ public class AccountsController(IMediator mediator) : ControllerBase
     /// <response code="406">Email or password is invalid</response>
     [AllowAnonymous]
     [HttpPost("[action]")]
-    public async Task<ApiResponse<LoginResponse>> Login(LoginRequest command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    public async Task<ApiResponse<LoginResponse>> Login(LoginRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(request, cancellationToken);
 }

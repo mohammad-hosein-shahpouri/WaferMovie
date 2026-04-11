@@ -1,4 +1,6 @@
-﻿namespace WaferMovie.Application.IntegrationTests;
+﻿using WaferMovie.Domain.Interfaces;
+
+namespace WaferMovie.Application.IntegrationTests;
 
 public static class SeedHandler
 {

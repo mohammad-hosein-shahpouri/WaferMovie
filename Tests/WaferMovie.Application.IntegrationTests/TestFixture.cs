@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using WaferMovie.Domain.Interfaces;
 
 namespace WaferMovie.Application.IntegrationTests;
 

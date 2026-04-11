@@ -3,7 +3,7 @@ global using MediatR;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.DependencyInjection;
 global using NUnit.Framework;
-global using WaferMovie.Application.Common.Interfaces;
 global using WaferMovie.Domain.Entities;
 global using WaferMovie.Domain.Enums;
+global using WaferMovie.Domain.Interfaces;
 global using WaferMovie.Infrastructure.Persistence;
