@@ -8,7 +8,14 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddDomain(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddOptionMappings(configuration);
+        return services;
+    }
+
+    public static IServiceCollection AddOptionMappings(this IServiceCollection services, IConfiguration configuration)
+    {
         services.Configure<RedisOptions>(options => configuration.GetSection(RedisOptions.CONFIG));
+        services.Configure<JwtOptions>(options => configuration.GetSection(JwtOptions.CONFIG));
 
         return services;
     }

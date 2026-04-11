@@ -1,0 +1,10 @@
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
+global using Microsoft.Extensions.Options;
+global using StackExchange.Redis;
+global using WaferMovie.Domain.Entities;
+global using WaferMovie.Domain.Interfaces;
+global using WaferMovie.Domain.Options;

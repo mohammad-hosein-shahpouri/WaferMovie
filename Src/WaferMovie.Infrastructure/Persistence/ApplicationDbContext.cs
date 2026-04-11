@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using WaferMovie.Domain.Entities;
-using WaferMovie.Domain.Interfaces;
 using WaferMovie.Infrastructure.Persistence.Generators;
+using Role = WaferMovie.Domain.Entities.Role;
 
 namespace WaferMovie.Infrastructure.Persistence;
 

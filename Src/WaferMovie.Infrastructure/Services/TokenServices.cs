@@ -1,34 +1,23 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using WaferMovie.Application.Common.Interfaces;
-using WaferMovie.Domain.Entities;
+
 
 namespace WaferMovie.Infrastructure.Services;
 
-public class TokenServices : ITokenServices
+public class TokenServices(IOptions<JwtOptions> jwtOptions) : ITokenServices
 {
-    private readonly IConfiguration configuration;
-
-    public TokenServices(IConfiguration configuration)
-    {
-        this.configuration = configuration;
-    }
-
+    private readonly JwtOptions jwtOptions = jwtOptions.Value;
     public string GenerateJwtAsync(User user)
     {
-        var secretKey = Encoding.UTF8.GetBytes(configuration["Auth:JWTBearer:SecretKey"]!);
+        var secretKey = Encoding.UTF8.GetBytes(jwtOptions.SecretKey);
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            CompressionAlgorithm = configuration["Auth:JWTBearer:CompressionAlgorithm"],
-            Issuer = configuration["Auth:JWTBearer:Issuer"],
-            Audience = configuration["Auth:JWTBearer:Audience"],
+            CompressionAlgorithm = jwtOptions.CompressionAlgorithm,
+            Issuer = jwtOptions.CompressionAlgorithm,
+            Audience = jwtOptions.Audience,
             IssuedAt = DateTime.UtcNow,
             NotBefore = DateTime.UtcNow,
             Expires = DateTime.UtcNow.AddDays(31),
@@ -36,9 +25,10 @@ public class TokenServices : ITokenServices
             Subject = new ClaimsIdentity(GetClaims(user))
         };
 
-        if (Convert.ToBoolean(configuration.GetSection("Auth:JWTBearer:UseEncryptionKey").Value))
+        if (Convert.ToBoolean(jwtOptions.UseEncryptionKey))
         {
-            var encryptionKey = Encoding.UTF8.GetBytes(configuration["Auth:JWTBearer:EncryptionKey"]!);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(nameof(jwtOptions.UseEncryptionKey));
+            var encryptionKey = Encoding.UTF8.GetBytes(jwtOptions.EncryptionKey!);
             var encryptingCredentials = new EncryptingCredentials(
                 new SymmetricSecurityKey(encryptionKey), SecurityAlgorithms.Aes128KW,
                 SecurityAlgorithms.Aes128CbcHmacSha256);
@@ -51,16 +41,18 @@ public class TokenServices : ITokenServices
         return tokenHandler.WriteToken(securityToken);
     }
 
-    private IEnumerable<Claim> GetClaims(User user)
+    private static List<Claim> GetClaims(User user)
     {
-        var claims = new List<Claim>
-        {
-            new("Developer", "Mohammad Hosein Shahpouri"),
+        List<Claim> claims = [
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.NormalizedUserName!),
-            new("UserId", user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email!),
             new(new ClaimsIdentityOptions().SecurityStampClaimType, user.SecurityStamp ?? string.Empty),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+            new(JwtRegisteredClaimNames.Jti, Guid.CreateVersion7().ToString())
+        ];
+
+        if (user.BirthDate is not null)
+            claims.Add(new(ClaimTypes.DateOfBirth, user.BirthDate.Value.ToString("YYYY-MM-DD")));
 
         return claims;
     }

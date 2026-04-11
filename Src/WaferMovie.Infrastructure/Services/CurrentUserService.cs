@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using WaferMovie.Domain.Interfaces;
-
 namespace WaferMovie.Infrastructure.Services;
 
-public class CurrentUserService : ICurrentUserService
+public class CurrentUserService(IHttpContextAccessor httpContext) : ICurrentUserService
 {
-    private readonly IHttpContextAccessor httpContext;
-
-    public CurrentUserService(IHttpContextAccessor httpContext)
-    {
-        this.httpContext = httpContext;
-    }
-
     public bool IsAuthenticated => httpContext.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
-    public Guid Id => IsAuthenticated ? Guid.Parse(httpContext.HttpContext!.User.Claims.First(f => f.Type == "UserId").Value) : Guid.Empty;
+    public Guid Id => IsAuthenticated ?
+        Guid.Parse(httpContext.HttpContext!.User.Claims.First(f => f.Type == ClaimTypes.NameIdentifier).Value) :
+        throw new InvalidOperationException("Id is accessible only when authenticated");
+    public string Email => IsAuthenticated ?
+        httpContext.HttpContext!.User.Claims.First(f => f.Type == ClaimTypes.Email).Value :
+        throw new InvalidOperationException("Email is accessible only when authenticated");
 }

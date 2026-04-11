@@ -1,6 +1,5 @@
-﻿using System.Data;
+using System.Data;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Npgsql;
 
 namespace WaferMovie.Infrastructure.HealthCheck;

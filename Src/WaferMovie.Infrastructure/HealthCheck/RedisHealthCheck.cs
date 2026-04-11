@@ -1,18 +1,10 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
-using WaferMovie.Domain.Options;
 
 namespace WaferMovie.Infrastructure.HealthCheck;
 
-public class RedisHealthCheck : IHealthCheck
+public class RedisHealthCheck(IOptions<RedisOptions> options) : IHealthCheck
 {
-    private readonly RedisOptions redisOptions;
-
-    public RedisHealthCheck(IOptions<RedisOptions> options)
-    {
-        redisOptions = options.Value;
-    }
+    private readonly RedisOptions redisOptions = options.Value;
 
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
