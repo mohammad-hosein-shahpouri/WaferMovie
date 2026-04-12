@@ -15,6 +15,7 @@ public static class ConfigureServices
     public static IServiceCollection AddOptionMappings(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<JwtOptions>(options => configuration.GetSection(JwtOptions.CONFIG));
+        services.Configure<EmailOptions>(options => configuration.GetSection(EmailOptions.CONFIG));
 
         return services;
     }

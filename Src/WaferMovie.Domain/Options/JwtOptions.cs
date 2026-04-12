@@ -4,7 +4,6 @@ public class JwtOptions
 {
     public const string CONFIG = "Auth:JwtBearer";
 
-
     public required string SecretKey { get; set; }
     public required string CompressionAlgorithm { get; set; }
     public required string Issuer { get; set; }
