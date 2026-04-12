@@ -1,8 +1,8 @@
-﻿namespace WaferMovie.Application.Series.Queries.FindSerieById;
+namespace WaferMovie.Domain.ViewModels.Series.GetSerieById;
 
-public class FindSerieByIdQueryDto : IRegister
+public record GetSerieByIdResponse : IRegister
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string IMDB { get; set; } = default!;
     public string Title { get; set; } = default!;
     public string Description { get; set; } = default!;
@@ -15,7 +15,7 @@ public class FindSerieByIdQueryDto : IRegister
 
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<Serie, FindSerieByIdQueryDto>()
+        config.NewConfig<Serie, GetSerieByIdResponse>()
             .Map(dst => dst.AverageScore, src => src.Rates.Average(a => a.Score),
                 condition => condition.Rates.Any());
     }

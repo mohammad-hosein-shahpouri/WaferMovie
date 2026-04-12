@@ -1,9 +1,8 @@
-using WaferMovie.Application.Series.Commands.CreateSerie;
-using WaferMovie.Application.Series.Commands.DeleteSerie;
-using WaferMovie.Application.Series.Commands.UpdateSerie;
-using WaferMovie.Application.Series.Queries.FindSerieById;
-using WaferMovie.Application.Series.Queries.GetAllSeries;
-using WaferSerie.Application.SerieRates.Commands.CreateSerieRate;
+using WaferMovie.Domain.ViewModels.Series.CreateSerie;
+using WaferMovie.Domain.ViewModels.Series.CreateSerieRate;
+using WaferMovie.Domain.ViewModels.Series.DeleteSerie;
+using WaferMovie.Domain.ViewModels.Series.GetSerieById;
+using WaferMovie.Domain.ViewModels.Series.UpdateSerie;
 
 namespace WaferMovie.Web.Controllers;
 
@@ -11,28 +10,55 @@ namespace WaferMovie.Web.Controllers;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class SeriesController(IMediator mediator) : ControllerBase
 {
-
-    [HttpGet]
-    public async Task<ApiResponse<List<GetAllSeriesQueryDto>>> GetAll(CancellationToken cancellationToken)
-        => await mediator.Send(new GetAllSeriesQuery(), cancellationToken);
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ApiResponse<FindSerieByIdQueryDto>> FindById(Guid id, CancellationToken cancellationToken)
-        => await mediator.Send(new FindSerieByIdQuery(id), cancellationToken);
+    public async Task<ApiResponse<GetSerieByIdResponse>> FindById(Guid id, CancellationToken cancellationToken)
+        => await mediator.Send(new GetSerieByIdRequest { Id = id }, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost]
-    public async Task<ApiResponse<Guid>> CreateSerie(CreateSerieCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command, cancellationToken);
+    public async Task<ApiResponse<Guid>> CreateSerie(CreateSerieRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(request, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ApiResponse<Guid>> UpdateSerie(Guid id, UpdateSerieCommand command, CancellationToken cancellationToken)
-     => await mediator.Send(command with { Id = id }, cancellationToken);
+    public async Task<ApiResponse<Guid>> UpdateSerie(Guid id, UpdateSerieRequest request, CancellationToken cancellationToken)
+     => await mediator.Send(request with { Id = id }, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ApiResponse<Guid>> DeleteSerie(Guid id, CancellationToken cancellationToken)
-     => await mediator.Send(new DeleteSerieCommand(id), cancellationToken);
+    public async Task<ApiResponse> DeleteSerie(Guid id, CancellationToken cancellationToken)
+     => await mediator.Send(new DeleteSerieRequest { Id = id }, cancellationToken);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="request"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpPost("{id}/Rate")]
-    public async Task<ApiResponse> CreateRate(Guid id, CreateSerieRateCommand command, CancellationToken cancellationToken)
-        => await mediator.Send(command with { SerieId = id }, cancellationToken);
+    public async Task<ApiResponse> CreateRate(Guid id, CreateSerieRateRequest request, CancellationToken cancellationToken)
+        => await mediator.Send(request with { SerieId = id }, cancellationToken);
 }

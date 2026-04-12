@@ -1,4 +1,4 @@
-﻿namespace WaferSerie.Application.SerieRates.Commands.CreateSerieRate;
+namespace WaferMovie.Application.Series.CreateSerieRate;
 
 public class CreateSerieRateCommandValidator : AbstractValidator<CreateSerieRateCommand>
 {

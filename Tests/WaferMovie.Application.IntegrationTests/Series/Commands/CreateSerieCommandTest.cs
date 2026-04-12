@@ -1,5 +1,4 @@
-using WaferMovie.Application.Series.Commands.CreateSerie;
-using WaferMovie.Domain.Interfaces;
+using WaferMovie.Domain.ViewModels.Series.CreateSerie;
 
 namespace WaferMovie.Application.IntegrationTests.Series.Commands;
 
@@ -11,7 +10,7 @@ public class CreateSerieCommandTest : TestFixture
         using var dbContext = Resolve<IApplicationDbContext>();
         var mediator = Resolve<IMediator>();
 
-        var command = new CreateSerieCommand
+        var command = new CreateSerieRequest
         {
             AgeRestriction = EnumSerieAgeRestriction.TVMA,
             Description = "An unusual group of robbers attempt to carry out the most perfect robbery in Spanish history - stealing 2.4 billion euros from the Royal Mint of Spain.",
@@ -42,7 +41,7 @@ public class CreateSerieCommandTest : TestFixture
     {
         var mediator = Resolve<IMediator>();
 
-        var command = new CreateSerieCommand
+        var command = new CreateSerieRequest
         {
             Title = "How I Met Your Mother",
             AgeRestriction = EnumSerieAgeRestriction.TV14,
@@ -64,7 +63,7 @@ public class CreateSerieCommandTest : TestFixture
     public async Task ShouldHaveValidationError()
     {
         var mediator = Resolve<IMediator>();
-        var command = new CreateSerieCommand();
+        var command = new CreateSerieRequest();
 
         var result = await mediator.Send(command);
 
