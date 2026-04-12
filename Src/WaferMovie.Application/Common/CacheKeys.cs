@@ -24,19 +24,19 @@ public static class CacheKeys
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    public static string GetUsersKey(int userId) => string.Format(UsersKey, userId);
+    public static string GetUsersKey(Guid userId) => string.Format(UsersKey, userId);
 
     /// <summary>
     /// Key: WaferMovie:Movies:<MovieId>
     /// </summary>
     /// <param name="movieId"></param>
     /// <returns></returns>
-    public static string GetMoviesKey(int movieId) => string.Format(MoviesKey, movieId);
+    public static string GetMoviesKey(Guid movieId) => string.Format(MoviesKey, movieId);
 
     /// <summary>
     /// Key: WaferMovie:Series:<SerieId>
     /// </summary>
     /// <param name="serieId"></param>
     /// <returns></returns>
-    public static string GetSeriesKey(int serieId) => string.Format(SeriesKey, serieId);
+    public static string GetSeriesKey(Guid serieId) => string.Format(SeriesKey, serieId);
 }
