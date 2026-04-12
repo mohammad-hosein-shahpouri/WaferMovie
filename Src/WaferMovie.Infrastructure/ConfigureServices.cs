@@ -95,14 +95,8 @@ public static class ConfigureServices
 
     public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
     {
-        var redisPort = configuration["Redis:Port"];
-        var redisHost = configuration["Redis:Host"];
-        var redisPassword = configuration["Redis:Password"];
-        var redisDatabase = configuration.GetValue<int>("Redis:Database");
-        var connectionString = $"{redisHost}:{redisPort},password={redisPassword}";
-
-        services.AddScoped(cfg => ConnectionMultiplexer.Connect(connectionString).GetDatabase(redisDatabase));
-
+        var connectionString = configuration.GetConnectionString("redis")!;
+        services.AddSingleton(cfg => ConnectionMultiplexer.Connect(connectionString).GetDatabase());
         return services;
     }
 }

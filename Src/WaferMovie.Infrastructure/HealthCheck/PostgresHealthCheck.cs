@@ -4,15 +4,8 @@ using Npgsql;
 
 namespace WaferMovie.Infrastructure.HealthCheck;
 
-public class PostgresHealthCheck : IHealthCheck
+public class PostgresHealthCheck(IConfiguration configuration) : IHealthCheck
 {
-    private readonly IConfiguration configuration;
-
-    public PostgresHealthCheck(IConfiguration configuration)
-    {
-        this.configuration = configuration;
-    }
-
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
     {
         try
