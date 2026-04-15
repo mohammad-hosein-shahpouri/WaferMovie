@@ -19,6 +19,8 @@ builder.Services.AddSwaggerGen(options =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFilename);
 
     options.IncludeXmlComments(xmlPath);
+    options.OrderActionsBy(apiDesc => apiDesc.RelativePath);
+
 });
 
 builder.Services.AddDomain(builder.Configuration)

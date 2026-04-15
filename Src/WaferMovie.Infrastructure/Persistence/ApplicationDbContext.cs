@@ -9,12 +9,11 @@ namespace WaferMovie.Infrastructure.Persistence;
 
 public class ApplicationDbContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, IdentityUserLogin<Guid>, RoleClaim, IdentityUserToken<Guid>>, IApplicationDbContext
 {
-    private readonly ICurrentUserService currentUserService;
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, ICurrentUserService currentUserService) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        this.currentUserService = currentUserService;
+        if (Database.IsNpgsql())
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     #region Series

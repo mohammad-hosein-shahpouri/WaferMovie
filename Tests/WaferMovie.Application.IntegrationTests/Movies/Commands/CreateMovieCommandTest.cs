@@ -26,7 +26,7 @@ public class CreateMovieCommandTest : TestFixture
         var newMovie = await dbContext.Movies.FirstOrDefaultAsync(f => f.Id == result.Data);
 
         result.Succeeded.Should().BeTrue();
-        //result.Status.Should().Be(CrudStatus.Succeeded);
+        result.Status.Should().Be(EnumApiResponseStatus.Success);
 
         newMovie!.Description.Should().Be(command.Description);
         newMovie.IsFree.Should().BeTrue();

@@ -28,7 +28,6 @@
       <Folder Include="ViewModels\Series\AddSerieToGroup\" />
       <Folder Include="ViewModels\Groups\GetGroupById\" />
       <Folder Include="ViewModels\Groups\UpdateGroup\" />
-      <Folder Include="ViewModels\Movies\" />
       <Folder Include="ViewModels\Series\" />
     </ItemGroup>
 </Project>

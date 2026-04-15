@@ -61,4 +61,5 @@ public class MoviesController(IMediator mediator) : ControllerBase
     [HttpPost("{id}/Rate")]
     public async Task<ApiResponse<Guid>> CreateRate(Guid id, CreateMovieRateRequest command, CancellationToken cancellationToken)
         => await mediator.Send(command with { MovieId = id }, cancellationToken);
+
 }

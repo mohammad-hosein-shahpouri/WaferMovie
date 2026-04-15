@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Hosting;
+using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
-using System.Net;
 
 namespace WaferMovie.Application.IntegrationTests;
 
