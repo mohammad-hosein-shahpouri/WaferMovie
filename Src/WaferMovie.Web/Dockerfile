@@ -1,13 +1,13 @@
 ARG DOTNET_VERSION=10.0
+ARG DOTNET_DISTRO=resolute
 
-FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-noble AS base
+FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION}-${DOTNET_DISTRO} AS base
 LABEL "Author"="Mohammad Hosein Shahpouri"
-WORKDIR /app
-#RUN apk add --no-cache nano curl tzdata
+RUN apt install --update --no-install-recommanded --yes vim curl telnet iputils-ping
 EXPOSE 8080/TCP
 EXPOSE 8443/TCP
 
-FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-noble AS build
+FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VERSION}-${DOTNET_DISTRO} AS build
 WORKDIR /src
 COPY ./Src /src
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
