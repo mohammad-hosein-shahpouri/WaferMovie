@@ -1,15 +1,26 @@
 services:
   wafer-movie-api:
     container_name: wafer-movie-api
-    image: ghcr.io/mohammad-hosein-shahpouri/wafer-movie-api:v${IMAGE_TAG}
+    image: ghcr.io/mohammad-hosein-shahpouri/wafer-movie-api:v${IMAGE_TAG:-latest}
     stdin_open: true
     tty: true
     build:
       context: ./
-      dockerfile: ./Src/WaferMovie.Web/Dockerfile
+      dockerfile: Dockerfile
     environment:
       TZ: Asia/Tehran
-      ASPNETCORE_URLS: http://+:8080;https://+:8443;
+      PORT: 8080
+      ENVIRONMENT: production
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: WaferMovie
+      POSTGRES_PASSWORD: Qwer@#1234
+      POSTGRES_DB: WaferMovie.App
+      POSTGRES_SSLMODE: disable
+      REDIS_ADDR: redis:6379
+      JWT_SECRET: 103Tx^YqUB9WwWnHT^94
+      JWT_ISSUER: LocalHost
+      JWT_AUDIENCE: LocalHost
     restart: always
     hostname: wafer-movie
     networks:
@@ -17,14 +28,13 @@ services:
     volumes:
       - wafer-movie-api-logs:/app/logs
     ports:
-      - 8080:8080
-      - 8443:8443
+      - "8080:8080"
     depends_on:
       - postgres
       - redis
 
   postgres:
-    image: postgres:17-alpine
+    image: postgres:18-trixie
     restart: always
     networks:
       - wafer-movie
@@ -48,7 +58,7 @@ services:
 
 networks:
   wafer-movie:
-  
+
 volumes:
   postgres-data:
   wafer-movie-api-logs:

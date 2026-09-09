@@ -1,0 +1,657 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "WaferMovie API",
+    "version": "1.0.0",
+    "description": "High-performance backend API for movie & TV series catalog management, streaming/download links, ratings, user sessions, and dynamic search."
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Current Environment"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local Development Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter your JWT token in the format: Bearer <token>"
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "succeeded": { "type": "boolean" },
+          "status": { "type": "integer" },
+          "messages": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "data": {}
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string", "format": "email", "example": "admin@example.com" },
+          "password": { "type": "string", "example": "P@ssw0rd123!" }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "userName": { "type": "string" },
+          "email": { "type": "string" },
+          "accountBalance": { "type": "integer" },
+          "token": { "type": "string" }
+        }
+      },
+      "GetCurrentUserResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "userName": { "type": "string" },
+          "email": { "type": "string" },
+          "accountBalance": { "type": "integer" },
+          "ipAddress": { "type": "string" }
+        }
+      },
+      "UserSessionResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "userId": { "type": "string", "format": "uuid" },
+          "creationDate": { "type": "string", "format": "date-time" },
+          "isActive": { "type": "boolean" },
+          "ipAddress": { "type": "string" },
+          "deviceKind": { "type": "integer" },
+          "deviceOs": { "type": "integer" },
+          "deviceAgent": { "type": "integer" }
+        }
+      },
+      "CreateUserRequest": {
+        "type": "object",
+        "required": ["name", "email", "userName", "password", "passwordConfirmation"],
+        "properties": {
+          "name": { "type": "string", "example": "John Doe" },
+          "email": { "type": "string", "format": "email", "example": "john@example.com" },
+          "phoneNumber": { "type": "string", "example": "+989123456789" },
+          "userName": { "type": "string", "example": "johndoe" },
+          "password": { "type": "string", "example": "SecureP@ss123" },
+          "passwordConfirmation": { "type": "string", "example": "SecureP@ss123" }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "required": ["name", "email", "userName"],
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phoneNumber": { "type": "string" },
+          "userName": { "type": "string" }
+        }
+      },
+      "CreateMovieRequest": {
+        "type": "object",
+        "required": ["title", "description", "imdb", "length", "outYear", "ageRestriction"],
+        "properties": {
+          "title": { "type": "string", "example": "Inception" },
+          "description": { "type": "string", "example": "A thief who steals corporate secrets through the use of dream-sharing technology..." },
+          "imdb": { "type": "string", "example": "tt1375666" },
+          "unavailable": { "type": "boolean", "default": false },
+          "length": { "type": "integer", "example": 148 },
+          "isFree": { "type": "boolean", "default": false },
+          "outYear": { "type": "integer", "example": 2010 },
+          "ageRestriction": { "type": "integer", "description": "1: G, 2: PG, 3: PG-13, 4: R, 5: NC-17", "example": 3 }
+        }
+      },
+      "UpdateMovieRequest": {
+        "type": "object",
+        "required": ["title", "description", "length", "outYear", "ageRestriction"],
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "unavailable": { "type": "boolean" },
+          "length": { "type": "integer" },
+          "isFree": { "type": "boolean" },
+          "outYear": { "type": "integer" },
+          "ageRestriction": { "type": "integer" }
+        }
+      },
+      "GetMovieByIdResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "imdb": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "averageScore": { "type": "number", "format": "float" },
+          "length": { "type": "integer" },
+          "isFree": { "type": "boolean" },
+          "outYear": { "type": "integer" },
+          "ageRestriction": { "type": "string" }
+        }
+      },
+      "CreateRateRequest": {
+        "type": "object",
+        "required": ["score"],
+        "properties": {
+          "score": { "type": "integer", "minimum": 1, "maximum": 10, "example": 9 }
+        }
+      },
+      "CreateSerieRequest": {
+        "type": "object",
+        "required": ["title", "description", "imdb", "length", "firstSeasonYear", "lastSeasonYear", "ageRestriction"],
+        "properties": {
+          "title": { "type": "string", "example": "Breaking Bad" },
+          "description": { "type": "string", "example": "A chemistry teacher diagnosed with inoperable lung cancer..." },
+          "imdb": { "type": "string", "example": "tt0903747" },
+          "ageRestriction": { "type": "integer", "description": "1: TV-Y, 2: TV-Y7, 3: TV-G, 4: TV-PG, 5: TV-14, 6: TV-MA", "example": 6 },
+          "unavailable": { "type": "boolean", "default": false },
+          "length": { "type": "integer", "example": 47 },
+          "isFree": { "type": "boolean", "default": false },
+          "streamNetwork": { "type": "string", "example": "AMC" },
+          "firstSeasonYear": { "type": "integer", "example": 2008 },
+          "lastSeasonYear": { "type": "integer", "example": 2013 }
+        }
+      },
+      "UpdateSerieRequest": {
+        "type": "object",
+        "required": ["title", "description", "length", "firstSeasonYear", "lastSeasonYear", "ageRestriction"],
+        "properties": {
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "ageRestriction": { "type": "integer" },
+          "unavailable": { "type": "boolean" },
+          "length": { "type": "integer" },
+          "isFree": { "type": "boolean" },
+          "firstSeasonYear": { "type": "integer" },
+          "lastSeasonYear": { "type": "integer" }
+        }
+      },
+      "GetSerieByIdResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "imdb": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "length": { "type": "integer" },
+          "isFree": { "type": "boolean" },
+          "streamNetwork": { "type": "string" },
+          "averageScore": { "type": "number", "format": "float" },
+          "firstSeasonYear": { "type": "integer" },
+          "lastSeasonYear": { "type": "integer" }
+        }
+      },
+      "CreateGroupRequest": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "example": "Top Rated Sci-Fi" },
+          "description": { "type": "string", "example": "A collection of highest rated sci-fi movies" },
+          "imageUrl": { "type": "string" },
+          "imageThumbnailUrl": { "type": "string" },
+          "isPublic": { "type": "boolean", "default": true }
+        }
+      },
+      "UpdateGroupRequest": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "imageUrl": { "type": "string" },
+          "imageThumbnailUrl": { "type": "string" },
+          "isPublic": { "type": "boolean" }
+        }
+      },
+      "GetGroupByIdResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "imageUrl": { "type": "string" },
+          "imageThumbnailUrl": { "type": "string" }
+        }
+      },
+      "SearchRequest": {
+        "type": "object",
+        "properties": {
+          "pageNumber": { "type": "integer", "default": 1, "example": 1 },
+          "pageSize": { "type": "integer", "default": 10, "example": 10 },
+          "orderBy": { "type": "string", "example": "OutYear desc" },
+          "filters": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "property": { "type": "string", "example": "Title" },
+                "value": { "type": "string", "example": "Top" },
+                "operator": { "type": "integer", "description": "1: EqualTo, 2: NotEqualTo, 3: LessThan, 4: LessThanOrEqualTo, 5: GreaterThan, 6: GreaterThanOrEqualTo, 7: Contains, 8: StartsWith, 9: EndsWith", "example": 7 }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/ready": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Health Probe",
+        "description": "Returns status of PostgreSQL and Redis connections.",
+        "responses": {
+          "200": { "description": "System Healthy" },
+          "503": { "description": "System Unhealthy" }
+        }
+      }
+    },
+    "/api/v1/Accounts/Login": {
+      "post": {
+        "tags": ["Accounts"],
+        "summary": "Authenticate User",
+        "description": "Authenticates using email and password, creates an active session, and returns a JWT token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login Successful" },
+          "400": { "description": "Invalid credentials or user not found" }
+        }
+      }
+    },
+    "/api/v1/Accounts": {
+      "get": {
+        "tags": ["Accounts"],
+        "summary": "Get Current User Profile",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Current user profile" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/api/v1/Accounts/Sessions": {
+      "get": {
+        "tags": ["Accounts"],
+        "summary": "Get Active Sessions",
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List of active sessions" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/api/v1/Accounts/Sessions/{id}": {
+      "delete": {
+        "tags": ["Accounts"],
+        "summary": "Revoke Active Session",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Session revoked" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Session not found" }
+        }
+      }
+    },
+    "/api/v1/Users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create User",
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateUserRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "User created" },
+          "401": { "description": "Unauthorized" },
+          "406": { "description": "Validation failure (weak password, duplicate email/username)" }
+        }
+      }
+    },
+    "/api/v1/Users/{id}": {
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update User",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateUserRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "User updated" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "User not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete User",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "User deleted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "User not found" }
+        }
+      }
+    },
+    "/api/v1/Movies": {
+      "post": {
+        "tags": ["Movies"],
+        "summary": "Create Movie",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateMovieRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Movie created" },
+          "406": { "description": "Duplicate IMDB code" }
+        }
+      }
+    },
+    "/api/v1/Movies/{id}": {
+      "get": {
+        "tags": ["Movies"],
+        "summary": "Get Movie By ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Movie details" },
+          "404": { "description": "Movie not found" }
+        }
+      },
+      "put": {
+        "tags": ["Movies"],
+        "summary": "Update Movie",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateMovieRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Movie updated" },
+          "404": { "description": "Movie not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Movies"],
+        "summary": "Delete Movie",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Movie deleted" },
+          "404": { "description": "Movie not found" }
+        }
+      }
+    },
+    "/api/v1/Movies/{id}/Rate": {
+      "post": {
+        "tags": ["Movies"],
+        "summary": "Rate Movie",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateRateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Rating submitted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Movie not found" },
+          "406": { "description": "Invalid rating (must be 1-10)" }
+        }
+      }
+    },
+    "/api/v1/Series": {
+      "post": {
+        "tags": ["Series"],
+        "summary": "Create TV Series",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateSerieRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Serie created" },
+          "406": { "description": "Duplicate IMDB code" }
+        }
+      }
+    },
+    "/api/v1/Series/{id}": {
+      "get": {
+        "tags": ["Series"],
+        "summary": "Get Series By ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Series details" },
+          "404": { "description": "Series not found" }
+        }
+      },
+      "put": {
+        "tags": ["Series"],
+        "summary": "Update Series",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateSerieRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Series updated" },
+          "404": { "description": "Series not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Series"],
+        "summary": "Delete Series",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Series deleted" },
+          "404": { "description": "Series not found" }
+        }
+      }
+    },
+    "/api/v1/Series/{id}/Rate": {
+      "post": {
+        "tags": ["Series"],
+        "summary": "Rate TV Series",
+        "security": [{ "BearerAuth": [] }],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateRateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Rating submitted" },
+          "401": { "description": "Unauthorized" },
+          "404": { "description": "Series not found" },
+          "406": { "description": "Invalid rating (must be 1-10)" }
+        }
+      }
+    },
+    "/api/v1/Groups": {
+      "post": {
+        "tags": ["Groups"],
+        "summary": "Create Group",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateGroupRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Group created" }
+        }
+      }
+    },
+    "/api/v1/Groups/{id}": {
+      "get": {
+        "tags": ["Groups"],
+        "summary": "Get Group By ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Group details" },
+          "404": { "description": "Group not found" }
+        }
+      },
+      "put": {
+        "tags": ["Groups"],
+        "summary": "Update Group",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateGroupRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Group updated" },
+          "404": { "description": "Group not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Groups"],
+        "summary": "Delete Group",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": { "description": "Group soft-deleted" },
+          "404": { "description": "Group not found" }
+        }
+      }
+    },
+    "/api/v1/Search": {
+      "post": {
+        "tags": ["Search"],
+        "summary": "Search All",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SearchRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Paginated search results" }
+        }
+      }
+    },
+    "/api/v1/Search/Movies": {
+      "post": {
+        "tags": ["Search"],
+        "summary": "Search Movies",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SearchRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Paginated movie search results" }
+        }
+      }
+    },
+    "/api/v1/Search/Series": {
+      "post": {
+        "tags": ["Search"],
+        "summary": "Search Series",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SearchRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Paginated series search results" }
+        }
+      }
+    }
+  }
+}
