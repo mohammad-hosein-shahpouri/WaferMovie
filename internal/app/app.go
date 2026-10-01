@@ -45,25 +45,25 @@ func SetupRouter(
 	healthHandler := handler.NewHealthHandler(db, cache)
 	docsHandler := handler.NewDocsHandler()
 
-	r := gin.New()
-	r.Use(middleware.Recovery())
-	r.Use(middleware.CORS())
-	r.Use(middleware.Localization())
+	app := gin.New()
+	app.Use(middleware.Recovery())
+	app.Use(middleware.CORS())
+	app.Use(middleware.Localization())
 
 	// Health check probe
-	r.GET("/ready", healthHandler.Ready)
+	app.GET("/ready", healthHandler.Ready)
 
 	// API Documentation (Swagger & Scalar)
-	r.GET("/docs/openapi.json", docsHandler.OpenAPISpec)
-	r.GET("/swagger", docsHandler.SwaggerUI)
-	r.GET("/swagger/*any", docsHandler.SwaggerUI)
-	r.GET("/scalar", docsHandler.ScalarUI)
-	r.GET("/docs", func(c *gin.Context) {
+	app.GET("/docs/openapi.json", docsHandler.OpenAPISpec)
+	app.GET("/swagger", docsHandler.SwaggerUI)
+	app.GET("/swagger/*any", docsHandler.SwaggerUI)
+	app.GET("/scalar", docsHandler.ScalarUI)
+	app.GET("/docs", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/scalar")
 	})
 
 	// API v1
-	v1 := r.Group("/api/v1")
+	v1 := app.Group("/api/v1")
 	{
 		// Accounts
 		accounts := v1.Group("/Accounts")
@@ -120,5 +120,5 @@ func SetupRouter(
 		}
 	}
 
-	return r
+	return app
 }

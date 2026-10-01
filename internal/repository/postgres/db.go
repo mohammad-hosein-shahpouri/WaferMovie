@@ -10,12 +10,16 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 func New(cfg config.PostgresConfig) (*gorm.DB, error) {
 	logLevel := logger.Silent
 	db, err := gorm.Open(postgres.Open(cfg.DSN()), &gorm.Config{
 		Logger: logger.Default.LogMode(logLevel),
+		NamingStrategy: schema.NamingStrategy{
+			NoLowerCase: true,
+		},
 	})
 	if err != nil {
 		return nil, err

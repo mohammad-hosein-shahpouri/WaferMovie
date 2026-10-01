@@ -13,14 +13,14 @@ import (
 )
 
 type MovieHandler struct {
-	svc service.MovieService
+	movieService service.MovieService
 }
 
-func NewMovieHandler(svc service.MovieService) *MovieHandler {
-	return &MovieHandler{svc: svc}
+func NewMovieHandler(movieService service.MovieService) *MovieHandler {
+	return &MovieHandler{movieService: movieService}
 }
 
-func (h *MovieHandler) GetMovieById(c *gin.Context) {
+func (handler *MovieHandler) GetMovieById(c *gin.Context) {
 	loc := middleware.GetI18n(c)
 	idStr := c.Param("id")
 	id, err := uuid.Parse(idStr)
@@ -29,7 +29,7 @@ func (h *MovieHandler) GetMovieById(c *gin.Context) {
 		return
 	}
 
-	movie, err := h.svc.GetById(c.Request.Context(), id)
+	movie, err := handler.movieService.GetById(c.Request.Context(), id)
 	if err != nil {
 		if errors.Is(err, service.ErrMovieNotFound) {
 			msg := loc.Validation("{0} is not found", loc.Property("movie"))
@@ -51,7 +51,7 @@ func (h *MovieHandler) CreateMovie(c *gin.Context) {
 		return
 	}
 
-	newId, err := h.svc.Create(c.Request.Context(), req)
+	newId, err := h.movieService.Create(c.Request.Context(), req)
 	if err != nil {
 		if errors.Is(err, service.ErrDuplicateIMDB) {
 			msg := loc.Validation("{0} already exists", loc.Property("IMDB"))
@@ -80,7 +80,7 @@ func (h *MovieHandler) UpdateMovie(c *gin.Context) {
 		return
 	}
 
-	updatedId, err := h.svc.Update(c.Request.Context(), id, req)
+	updatedId, err := h.movieService.Update(c.Request.Context(), id, req)
 	if err != nil {
 		if errors.Is(err, service.ErrMovieNotFound) {
 			response.JSON(c, response.Fail(response.StatusNotFound, loc.Shared("NotFound")))
@@ -102,7 +102,7 @@ func (h *MovieHandler) DeleteMovie(c *gin.Context) {
 		return
 	}
 
-	if err := h.svc.Delete(c.Request.Context(), id); err != nil {
+	if err := h.movieService.Delete(c.Request.Context(), id); err != nil {
 		if errors.Is(err, service.ErrMovieNotFound) {
 			response.JSON(c, response.Fail(response.StatusNotFound, loc.Shared("NotFound")))
 			return
@@ -135,7 +135,7 @@ func (h *MovieHandler) CreateRate(c *gin.Context) {
 		return
 	}
 
-	if err := h.svc.Rate(c.Request.Context(), movieId, userId, req.Score); err != nil {
+	if err := h.movieService.Rate(c.Request.Context(), movieId, userId, req.Score); err != nil {
 		if errors.Is(err, service.ErrMovieNotFound) {
 			response.JSON(c, response.Fail(response.StatusNotFound, loc.Shared("NotFound")))
 			return
